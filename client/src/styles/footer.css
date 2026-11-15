@@ -1,8 +1,8 @@
 .footer-wrapper {
-  background-color: #002244;
+  background-color: #0f172a;
   color: #cbd5e1;
   padding: 48px 0 24px;
-  border-top: 4px solid var(--accent-blue);
+  border-top: 4px solid var(--primary);
   margin-top: auto;
 }
 

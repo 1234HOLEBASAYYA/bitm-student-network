@@ -15,7 +15,7 @@
 
 .network-header-title h2 {
   font-size: 1.45rem;
-  color: var(--primary-navy);
+  color: var(--primary);
   margin-bottom: 4px;
 }
 
@@ -24,7 +24,9 @@
   color: var(--text-muted);
 }
 
-/* Filter Card */
+/* ==========================================================================
+   Filter Card & Search Bar
+   ========================================================================== */
 .filter-bar-card {
   padding: 18px 24px;
   display: flex;
@@ -42,6 +44,7 @@
   position: absolute;
   left: 14px;
   color: #94a3b8;
+  pointer-events: none;
 }
 
 .search-input {
@@ -51,12 +54,12 @@
   border-radius: var(--radius-sm);
   outline: none;
   font-size: 0.92rem;
-  transition: border-color var(--transition-fast);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .search-input:focus {
-  border-color: var(--accent-blue);
-  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+  border-color: var(--link-blue);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
 }
 
 .clear-search-btn {
@@ -66,6 +69,11 @@
   border: none;
   color: #94a3b8;
   cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.clear-search-btn:hover {
+  color: var(--primary);
 }
 
 .filters-row {
@@ -85,13 +93,19 @@
 }
 
 .filter-select, .filter-text-input {
-  padding: 6px 12px;
+  padding: 7px 12px;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
   background: #ffffff;
   font-size: 0.85rem;
   color: var(--text-primary);
   outline: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.filter-select:focus, .filter-text-input:focus {
+  border-color: var(--link-blue);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
 }
 
 .filter-text-input {
@@ -102,7 +116,9 @@
   margin-left: auto;
 }
 
-/* Student Cards Grid */
+/* ==========================================================================
+   Student Cards Grid & Hover Lift
+   ========================================================================== */
 .student-cards-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -112,7 +128,15 @@
 .student-card {
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 22px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.student-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
 }
 
 .student-card-top {
@@ -128,21 +152,21 @@
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #ffffff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
 }
 
 .student-avatar-fallback {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: var(--primary-navy);
+  background: var(--primary);
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
   font-weight: 700;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
 }
 
 .student-usn-badge {
@@ -166,13 +190,13 @@
 .student-name {
   font-size: 1.05rem;
   font-weight: 700;
-  color: var(--primary-navy);
+  color: var(--primary);
   margin-bottom: 2px;
 }
 
 .student-dept {
   font-size: 0.8rem;
-  color: var(--accent-blue);
+  color: var(--link-blue);
   font-weight: 600;
 }
 
@@ -207,6 +231,11 @@
   padding: 2px 6px;
   border-radius: var(--radius-sm);
   color: var(--text-primary);
+  transition: all var(--transition-fast);
+}
+
+.skill-chip:hover {
+  background: #e2e8f0;
 }
 
 .skill-chip-more {
@@ -224,6 +253,9 @@
   gap: 8px;
 }
 
+/* ==========================================================================
+   Status Badges (Connected #16A34A, Pending #F59E0B)
+   ========================================================================== */
 .status-badge {
   display: inline-flex;
   align-items: center;
@@ -240,7 +272,9 @@
   color: var(--warning);
 }
 
-/* Network Tabs Bar */
+/* ==========================================================================
+   Network Tabs Bar
+   ========================================================================== */
 .network-tabs-bar {
   display: flex;
   gap: 10px;
@@ -256,18 +290,18 @@
   color: var(--text-secondary);
   cursor: pointer;
   position: relative;
-  transition: all var(--transition-fast);
+  transition: color var(--transition-fast);
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
 .net-tab-btn:hover {
-  color: var(--primary-navy);
+  color: var(--primary);
 }
 
 .net-tab-btn.active {
-  color: var(--accent-blue);
+  color: var(--primary);
 }
 
 .net-tab-btn.active::after {
@@ -277,7 +311,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: var(--accent-blue);
+  background: var(--primary);
   border-radius: 2px;
 }
 
@@ -310,6 +344,14 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 16px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.request-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
 }
 
 .request-user-info {
@@ -329,7 +371,7 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: var(--primary-navy);
+  background: var(--primary);
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -341,7 +383,7 @@
 .req-name {
   font-weight: 700;
   font-size: 0.98rem;
-  color: var(--primary-navy);
+  color: var(--primary);
   display: block;
 }
 
@@ -354,7 +396,7 @@
 .req-message-bubble {
   margin-top: 6px;
   background: var(--bg-subtle);
-  border-left: 3px solid var(--accent-blue);
+  border-left: 3px solid var(--link-blue);
   padding: 4px 10px;
   font-size: 0.82rem;
   color: var(--text-primary);
@@ -371,10 +413,12 @@
 .delete-btn {
   color: var(--danger);
   border-color: #fecaca;
+  transition: all var(--transition-fast);
 }
 
 .delete-btn:hover {
   background: var(--danger-bg);
+  border-color: var(--danger);
 }
 
 @media (max-width: 1024px) {

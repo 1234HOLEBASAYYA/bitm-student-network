@@ -40,8 +40,8 @@
 }
 
 .hero-highlight {
-  color: var(--accent-blue);
-  background: linear-gradient(90deg, #003366, #0066cc);
+  color: var(--link-blue);
+  background: linear-gradient(90deg, var(--primary), var(--link-blue));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

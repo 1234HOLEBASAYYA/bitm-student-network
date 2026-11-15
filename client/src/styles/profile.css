@@ -12,7 +12,7 @@
 
 .profile-cover-banner {
   height: 140px;
-  background: linear-gradient(135deg, #003366 0%, #0066cc 60%, #0284c7 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 60%, var(--link-blue) 100%);
 }
 
 .profile-header-content {
@@ -193,11 +193,11 @@
 }
 
 .tab-btn:hover {
-  color: var(--primary-navy);
+  color: var(--primary);
 }
 
 .tab-btn.active {
-  color: var(--accent-blue);
+  color: var(--primary);
 }
 
 .tab-btn.active::after {
@@ -207,7 +207,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: var(--accent-blue);
+  background: var(--primary);
   border-radius: 2px;
 }
 
@@ -286,12 +286,19 @@
 }
 
 .project-item-card {
-  background: var(--bg-subtle);
+  background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
   padding: 18px;
   display: flex;
   flex-direction: column;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.project-item-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
 }
 
 .proj-card-top {
@@ -374,10 +381,17 @@
   display: flex;
   align-items: flex-start;
   gap: 16px;
-  padding: 14px;
-  background: var(--bg-subtle);
+  padding: 16px;
+  background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.achievement-row:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
 }
 
 .achieve-icon {
@@ -435,10 +449,17 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 14px;
-  background: var(--bg-subtle);
+  padding: 16px;
+  background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.cert-row:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
 }
 
 .cert-icon {

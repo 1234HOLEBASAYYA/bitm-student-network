@@ -15,7 +15,7 @@
 
 .opp-header-title h2 {
   font-size: 1.45rem;
-  color: var(--primary-navy);
+  color: var(--primary);
   margin-bottom: 4px;
 }
 
@@ -31,6 +31,9 @@
   gap: 12px;
 }
 
+/* ==========================================================================
+   Category Chips
+   ========================================================================== */
 .opp-category-chips {
   display: flex;
   gap: 8px;
@@ -52,17 +55,21 @@
 }
 
 .opp-chip:hover {
-  border-color: var(--accent-blue);
-  color: var(--accent-blue);
+  border-color: var(--link-blue);
+  color: var(--link-blue);
+  background: var(--bg-subtle);
 }
 
 .opp-chip.active {
-  background: var(--primary-navy);
-  color: #ffffff;
-  border-color: var(--primary-navy);
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  border-color: var(--tag-border);
+  font-weight: 700;
 }
 
-/* Grid */
+/* ==========================================================================
+   Opportunities Grid & Cards (Hover lift by 3px & soft shadow)
+   ========================================================================== */
 .opportunities-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -73,6 +80,14 @@
   padding: 22px;
   display: flex;
   flex-direction: column;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.opp-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
 }
 
 .opp-card-top {
@@ -82,14 +97,17 @@
   margin-bottom: 10px;
 }
 
+/* Unified Category Pill */
 .opp-cat-pill {
   font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
-  color: var(--accent-blue);
-  background: #e0f2fe;
+  color: var(--tag-text);
+  background: var(--tag-bg);
+  border: 1px solid var(--tag-border);
   padding: 3px 10px;
   border-radius: var(--radius-sm);
+  letter-spacing: 0.3px;
 }
 
 .official-badge {
@@ -99,7 +117,7 @@
 .opp-card-title {
   font-size: 1.15rem;
   font-weight: 700;
-  color: var(--primary-navy);
+  color: var(--primary);
   margin-bottom: 6px;
   line-height: 1.35;
 }
@@ -158,6 +176,7 @@
 
 .meta-val.highlight {
   color: var(--success);
+  font-weight: 700;
 }
 
 .opp-card-footer {

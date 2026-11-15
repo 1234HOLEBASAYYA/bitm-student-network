@@ -1,6 +1,8 @@
 @import './variables.css';
 
-/* CSS Reset & Core Styling */
+/* ==========================================================================
+   CSS Reset & Global Typography
+   ========================================================================== */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -16,19 +18,20 @@ body {
   font-family: var(--font-family);
   background-color: var(--bg-page);
   color: var(--text-primary);
-  line-height: 1.5;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
 }
 
 a {
-  color: var(--accent-blue);
+  color: var(--link-blue);
   text-decoration: none;
   transition: color var(--transition-fast);
 }
 
 a:hover {
-  color: var(--accent-blue-hover);
+  color: var(--link-blue-hover);
 }
 
 button, input, select, textarea {
@@ -70,22 +73,26 @@ button, input, select, textarea {
   padding: 0 var(--space-md);
 }
 
-/* Card Component */
+/* ==========================================================================
+   Card Component (10-12px rounded corners & soft shadows)
+   ========================================================================== */
 .card {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-card);
   padding: var(--space-lg);
-  transition: box-shadow var(--transition-smooth), transform var(--transition-smooth);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-.card-hoverable:hover {
+.card:hover, .card-hoverable:hover {
+  transform: translateY(-3px);
   box-shadow: var(--shadow-hover);
-  transform: translateY(-2px);
 }
 
-/* Button System */
+/* ==========================================================================
+   Button System (Hover lift -2px, soft shadow, active scale 0.97)
+   ========================================================================== */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -96,42 +103,59 @@ button, input, select, textarea {
   border-radius: var(--radius-md);
   border: 1px solid transparent;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: transform var(--transition-fast),
+              background-color var(--transition-fast),
+              border-color var(--transition-fast),
+              box-shadow var(--transition-fast),
+              color var(--transition-fast);
   white-space: nowrap;
 }
 
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.15);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.97);
+}
+
 .btn-sm {
-  padding: 6px 12px;
+  padding: 6px 14px;
   font-size: 0.85rem;
   border-radius: var(--radius-sm);
 }
 
 .btn-lg {
-  padding: 14px 26px;
+  padding: 14px 28px;
   font-size: 1.05rem;
   border-radius: var(--radius-md);
 }
 
 .btn-primary {
-  background: var(--primary-navy);
+  background: var(--primary);
   color: #ffffff;
-  border-color: var(--primary-navy);
+  border-color: var(--primary);
 }
 
 .btn-primary:hover {
-  background: var(--primary-navy-light);
-  border-color: var(--primary-navy-light);
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
   color: #ffffff;
+  box-shadow: 0 4px 14px rgba(30, 58, 138, 0.28);
 }
 
 .btn-secondary {
-  background: var(--accent-blue);
+  background: var(--link-blue);
   color: #ffffff;
+  border-color: var(--link-blue);
 }
 
 .btn-secondary:hover {
-  background: var(--accent-blue-hover);
+  background: var(--link-blue-hover);
+  border-color: var(--link-blue-hover);
   color: #ffffff;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.28);
 }
 
 .btn-outline {
@@ -142,18 +166,21 @@ button, input, select, textarea {
 
 .btn-outline:hover {
   background: var(--bg-subtle);
-  border-color: var(--text-muted);
+  border-color: var(--text-secondary);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .btn-outline-primary {
   background: transparent;
-  border-color: var(--primary-navy);
-  color: var(--primary-navy);
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 .btn-outline-primary:hover {
-  background: var(--primary-navy);
+  background: var(--primary);
   color: #ffffff;
+  border-color: var(--primary);
+  box-shadow: 0 4px 14px rgba(30, 58, 138, 0.22);
 }
 
 .btn-danger {
@@ -163,6 +190,7 @@ button, input, select, textarea {
 
 .btn-danger:hover {
   background: #dc2626;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
 }
 
 .btn-success {
@@ -170,13 +198,22 @@ button, input, select, textarea {
   color: #ffffff;
 }
 
+.btn-success:hover {
+  background: #15803d;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
+}
+
 .btn-disabled, .btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
   pointer-events: none;
+  transform: none !important;
+  box-shadow: none !important;
 }
 
-/* Badge / Chips */
+/* ==========================================================================
+   Badges, Chips & Category Tags
+   ========================================================================== */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -186,29 +223,33 @@ button, input, select, textarea {
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
+  transition: all var(--transition-fast);
 }
 
-.badge-primary {
-  background: #e0f2fe;
-  color: #0369a1;
+/* Unified Category Tag Style (#DBEAFE bg with #1E40AF text) */
+.badge-primary,
+.badge-category {
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  border: 1px solid var(--tag-border);
 }
 
 .badge-success {
   background: var(--success-bg);
-  color: #065f46;
+  color: var(--success-text);
   border: 1px solid var(--success-border);
 }
 
 .badge-warning {
   background: var(--warning-bg);
-  color: #92400e;
+  color: var(--warning-text);
   border: 1px solid var(--warning-border);
 }
 
 .badge-danger {
   background: var(--danger-bg);
-  color: #991b1b;
+  color: var(--danger-text);
   border: 1px solid var(--danger-border);
 }
 
@@ -228,9 +269,17 @@ button, input, select, textarea {
   border-radius: var(--radius-sm);
   border: 1px solid #e2e8f0;
   font-weight: 500;
+  transition: all var(--transition-fast);
 }
 
-/* Forms & Input Elements */
+.skill-tag:hover {
+  background: #e2e8f0;
+  border-color: #cbd5e1;
+}
+
+/* ==========================================================================
+   Forms, Inputs & Search Bars (Soft Blue Ring on focus #2563EB @ 30%)
+   ========================================================================== */
 .form-group {
   margin-bottom: var(--space-md);
   display: flex;
@@ -244,7 +293,17 @@ button, input, select, textarea {
   color: var(--text-primary);
 }
 
-.form-control {
+.form-control,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="url"],
+input[type="tel"],
+input[type="number"],
+input[type="date"],
+textarea,
+select {
   width: 100%;
   padding: 10px 14px;
   border: 1px solid var(--border-color);
@@ -252,12 +311,23 @@ button, input, select, textarea {
   background: #ffffff;
   color: var(--text-primary);
   outline: none;
+  font-family: inherit;
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-.form-control:focus {
-  border-color: var(--border-focus);
-  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.15);
+.form-control:focus,
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+input[type="url"]:focus,
+input[type="tel"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--link-blue);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
 }
 
 textarea.form-control {
@@ -265,7 +335,9 @@ textarea.form-control {
   resize: vertical;
 }
 
-/* Alerts */
+/* ==========================================================================
+   Alerts & Notifications
+   ========================================================================== */
 .alert {
   padding: 12px 16px;
   border-radius: var(--radius-sm);
@@ -278,19 +350,19 @@ textarea.form-control {
 
 .alert-danger {
   background: var(--danger-bg);
-  color: #991b1b;
+  color: var(--danger-text);
   border: 1px solid var(--danger-border);
 }
 
 .alert-success {
   background: var(--success-bg);
-  color: #065f46;
+  color: var(--success-text);
   border: 1px solid var(--success-border);
 }
 
 .alert-info {
   background: var(--info-bg);
-  color: #075985;
+  color: var(--tag-text);
   border: 1px solid var(--info-border);
 }
 
@@ -320,7 +392,9 @@ textarea.form-control {
   margin: 0 auto var(--space-md);
 }
 
-/* Layout with Sidebar */
+/* ==========================================================================
+   Layout with Sidebar
+   ========================================================================== */
 .dashboard-layout {
   display: grid;
   grid-template-columns: 260px 1fr;
@@ -334,5 +408,91 @@ textarea.form-control {
 @media (max-width: 992px) {
   .dashboard-layout {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   Card Load Animations (Fade-in & slight slide-up 10px with stagger)
+   ========================================================================== */
+@keyframes cardFadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card,
+.dash-post-card,
+.dash-discussion-item,
+.dash-student-card,
+.dash-event-card,
+.dash-opp-item,
+.feed-post-card,
+.opp-card,
+.network-student-card,
+.discussion-row-card {
+  animation: cardFadeInUp 0.3s ease-out;
+}
+
+/* Stagger delay between items */
+.feed-post-card:nth-child(1),
+.network-student-card:nth-child(1),
+.opp-card:nth-child(1),
+.discussion-row-card:nth-child(1),
+.dash-widget:nth-child(1) {
+  animation-delay: 0.04s;
+}
+
+.feed-post-card:nth-child(2),
+.network-student-card:nth-child(2),
+.opp-card:nth-child(2),
+.discussion-row-card:nth-child(2),
+.dash-widget:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.feed-post-card:nth-child(3),
+.network-student-card:nth-child(3),
+.opp-card:nth-child(3),
+.discussion-row-card:nth-child(3),
+.dash-widget:nth-child(3) {
+  animation-delay: 0.12s;
+}
+
+.feed-post-card:nth-child(4),
+.network-student-card:nth-child(4),
+.opp-card:nth-child(4),
+.discussion-row-card:nth-child(4),
+.dash-widget:nth-child(4) {
+  animation-delay: 0.16s;
+}
+
+.feed-post-card:nth-child(5),
+.network-student-card:nth-child(5),
+.opp-card:nth-child(5),
+.discussion-row-card:nth-child(5) {
+  animation-delay: 0.20s;
+}
+
+.feed-post-card:nth-child(n+6),
+.network-student-card:nth-child(n+6),
+.opp-card:nth-child(n+6),
+.discussion-row-card:nth-child(n+6) {
+  animation-delay: 0.24s;
+}
+
+/* ==========================================================================
+   Accessibility: Reduced Motion Preference
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

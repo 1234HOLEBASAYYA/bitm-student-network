@@ -22,10 +22,15 @@
   align-items: center;
   gap: 10px;
   text-decoration: none;
+  transition: opacity var(--transition-fast);
+}
+
+.navbar-brand:hover {
+  opacity: 0.92;
 }
 
 .brand-logo {
-  height: 46px;
+  height: 44px;
   width: auto;
   object-fit: contain;
 }
@@ -38,7 +43,7 @@
 .brand-main-title {
   font-size: 1.15rem;
   font-weight: 800;
-  color: var(--primary-navy);
+  color: var(--primary);
   letter-spacing: -0.2px;
   line-height: 1.2;
 }
@@ -46,14 +51,17 @@
 .brand-sub-title {
   font-size: 0.7rem;
   font-weight: 600;
-  color: var(--accent-blue);
+  color: var(--link-blue);
   letter-spacing: 0.2px;
 }
 
+/* ==========================================================================
+   Desktop Navigation Links (Smooth hover & animated underline)
+   ========================================================================== */
 .desktop-nav {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .nav-link {
@@ -61,18 +69,40 @@
   color: var(--text-secondary);
   padding: 8px 14px;
   border-radius: var(--radius-sm);
-  transition: all var(--transition-fast);
+  transition: color var(--transition-fast), background-color var(--transition-fast);
   font-size: 0.92rem;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0px;
+  left: 12px;
+  right: 12px;
+  height: 2.5px;
+  background-color: var(--primary);
+  border-radius: 2px 2px 0 0;
+  transform: scaleX(0);
+  transition: transform var(--transition-fast);
+  transform-origin: center;
 }
 
 .nav-link:hover {
-  color: var(--primary-navy);
+  color: var(--primary);
   background-color: var(--bg-subtle);
 }
 
 .nav-link.active {
-  color: var(--accent-blue);
+  color: var(--primary);
   background-color: var(--bg-highlight);
+  font-weight: 700;
+}
+
+.nav-link.active::after {
+  transform: scaleX(1);
 }
 
 .nav-actions {
@@ -87,6 +117,9 @@
   gap: 10px;
 }
 
+/* ==========================================================================
+   Notification & Message Action Icons (Slight scale on hover)
+   ========================================================================== */
 .icon-btn {
   background: transparent;
   border: none;
@@ -98,12 +131,19 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  transition: all var(--transition-fast);
+  transition: transform var(--transition-fast),
+              background-color var(--transition-fast),
+              color var(--transition-fast);
 }
 
 .icon-btn:hover {
   background: var(--bg-subtle);
-  color: var(--primary-navy);
+  color: var(--primary);
+  transform: scale(1.1);
+}
+
+.icon-btn:active {
+  transform: scale(0.96);
 }
 
 .notif-badge {
@@ -117,6 +157,7 @@
   padding: 1px 5px;
   border-radius: 10px;
   border: 2px solid #ffffff;
+  line-height: 1;
 }
 
 .dropdown-wrapper {
@@ -151,7 +192,7 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: var(--primary-navy);
+  background: var(--primary);
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -194,19 +235,24 @@
   justify-content: space-between;
   font-weight: 700;
   font-size: 0.9rem;
-  color: var(--primary-navy);
+  color: var(--primary);
   background: var(--bg-subtle);
 }
 
 .mark-read-btn {
   background: transparent;
   border: none;
-  color: var(--accent-blue);
+  color: var(--link-blue);
   font-size: 0.78rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 4px;
+  transition: color var(--transition-fast);
+}
+
+.mark-read-btn:hover {
+  color: var(--link-blue-hover);
 }
 
 .notif-list {
@@ -254,9 +300,14 @@
   padding: 10px;
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--accent-blue);
+  color: var(--link-blue);
   background: var(--bg-subtle);
   border-top: 1px solid var(--border-color);
+  transition: color var(--transition-fast);
+}
+
+.notif-footer-link:hover {
+  color: var(--link-blue-hover);
 }
 
 .user-dropdown-info {
@@ -273,7 +324,7 @@
 
 .user-dept {
   font-size: 0.75rem;
-  color: var(--accent-blue);
+  color: var(--link-blue);
   font-weight: 600;
   margin-top: 2px;
 }
@@ -302,7 +353,7 @@
 
 .dropdown-link:hover {
   background: var(--bg-subtle);
-  color: var(--primary-navy);
+  color: var(--primary);
 }
 
 .dropdown-link.admin-link {
@@ -355,11 +406,12 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  transition: all var(--transition-fast);
 }
 
 .mobile-nav-link:hover {
   background: var(--bg-subtle);
-  color: var(--accent-blue);
+  color: var(--link-blue);
 }
 
 .mobile-auth-btns {
