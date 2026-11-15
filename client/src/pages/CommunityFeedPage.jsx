@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { motion, AnimatePresence } from 'motion/react';
 import { useAuth } from '../context/AuthContext';
 import Sidebar from '../components/Sidebar';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -370,10 +371,13 @@ const CommunityFeedPage = () => {
               const isCommentsOpen = activeCommentPostId === post._id;
 
               return (
-                <div
+                <motion.div
                   key={post._id}
                   id={`post-${post._id}`}
                   className={`card feed-post-card ${targetPostId === post._id ? 'highlighted-post' : ''}`}
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
                 >
                   {/* Post Header */}
                   <div className="feed-post-header">
@@ -452,13 +456,20 @@ const CommunityFeedPage = () => {
 
                   {/* Post Action Buttons */}
                   <div className="feed-post-actions-bar">
-                    <button
+                    <motion.button
                       className={`feed-act-btn ${post.isLiked ? 'liked' : ''}`}
                       onClick={() => handleToggleLike(post._id)}
+                      whileTap={{ scale: 0.92 }}
                     >
-                      <Heart size={18} fill={post.isLiked ? '#ef4444' : 'none'} />
+                      <motion.span
+                        animate={post.isLiked ? { scale: [1, 1.45, 1] } : { scale: 1 }}
+                        transition={{ duration: 0.25 }}
+                        style={{ display: 'inline-flex' }}
+                      >
+                        <Heart size={18} fill={post.isLiked ? '#ef4444' : 'none'} />
+                      </motion.span>
                       <span>Like</span>
-                    </button>
+                    </motion.button>
 
                     <button
                       className="feed-act-btn"
@@ -540,7 +551,7 @@ const CommunityFeedPage = () => {
                       )}
                     </div>
                   )}
-                </div>
+                </motion.div>
               );
             })}
           </div>

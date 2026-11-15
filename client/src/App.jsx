@@ -7,6 +7,7 @@ import { NotificationProvider } from './context/NotificationContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
+import FloatingDockNav from './components/FloatingDockNav';
 
 // Public & Auth Pages
 import LandingPage from './pages/LandingPage';
@@ -216,6 +217,7 @@ function App() {
                 <Route path="*" element={<FallbackRedirect />} />
               </Routes>
             </div>
+            <FloatingDockNav />
             <Footer />
           </div>
         </NotificationProvider>

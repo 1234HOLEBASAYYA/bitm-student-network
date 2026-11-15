@@ -1,0 +1,194 @@
+/* ==========================================================================
+   Apple-Style Floating Dock Navigation Styles
+   ========================================================================== */
+
+.apple-dock-fixed-wrapper {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1050;
+  pointer-events: auto;
+  max-width: calc(100vw - 32px);
+}
+
+.apple-dock-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 
+    0 10px 30px -5px rgba(15, 23, 42, 0.15),
+    0 0 0 1px rgba(226, 232, 240, 0.6),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.8);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.apple-dock-container:hover {
+  box-shadow: 
+    0 16px 36px -4px rgba(15, 23, 42, 0.2),
+    0 0 0 1px rgba(37, 99, 235, 0.2),
+    inset 0 1px 2px 0 rgba(255, 255, 255, 0.9);
+}
+
+.apple-dock-inner {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 52px;
+  padding-bottom: 2px;
+}
+
+.apple-dock-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background: rgba(241, 245, 249, 0.85);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  color: #334155;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.apple-dock-item:hover {
+  background: #ffffff;
+  color: var(--primary, #1e3a8a);
+  border-color: rgba(37, 99, 235, 0.35);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+}
+
+.apple-dock-item.active {
+  background: #ffffff;
+  color: var(--link-blue, #2563eb);
+  border-color: var(--link-blue, #2563eb);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.22);
+}
+
+.apple-dock-icon {
+  width: 55%;
+  height: 55%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.apple-dock-icon svg {
+  width: 100%;
+  height: 100%;
+  stroke-width: 2.1;
+  transition: transform 0.18s ease;
+}
+
+.apple-dock-item:hover .apple-dock-icon svg {
+  transform: scale(1.08);
+}
+
+/* Active Indicator Dot under the item */
+.dock-active-indicator {
+  position: absolute;
+  bottom: -4px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--link-blue, #2563eb);
+  box-shadow: 0 0 6px rgba(37, 99, 235, 0.8);
+}
+
+/* Notification badge */
+.dock-item-badge {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  background: #ef4444;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 800;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 5px rgba(239, 68, 68, 0.4);
+  pointer-events: none;
+}
+
+/* Dock Label Tooltip */
+.apple-dock-label {
+  position: absolute;
+  top: -38px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15, 23, 42, 0.88);
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  letter-spacing: 0.2px;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 100;
+}
+
+.dock-label-arrow {
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid rgba(15, 23, 42, 0.88);
+}
+
+/* Page Spacing adjustment when Dock is present */
+.has-floating-dock {
+  padding-bottom: 95px !important;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .apple-dock-fixed-wrapper {
+    bottom: 12px;
+  }
+
+  .apple-dock-container {
+    padding: 4px 8px;
+    border-radius: 22px;
+  }
+
+  .apple-dock-inner {
+    gap: 6px;
+    height: 46px;
+  }
+}
+
+@media (max-width: 480px) {
+  .apple-dock-inner {
+    gap: 4px;
+  }
+
+  .apple-dock-container {
+    padding: 3px 6px;
+  }
+}

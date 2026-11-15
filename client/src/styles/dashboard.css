@@ -62,6 +62,76 @@
 }
 
 /* ==========================================================================
+   Dashboard Quick Stats KPIs Strip
+   ========================================================================== */
+.dashboard-quick-stats {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 900px) {
+  .dashboard-quick-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.kpi-mini-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #ffffff;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-card);
+  text-decoration: none;
+  color: inherit;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+.kpi-mini-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+  border-color: rgba(37, 99, 235, 0.4);
+}
+
+.kpi-icon-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.kpi-icon-wrap.feed-kpi { background: #fee2e2; color: #ef4444; }
+.kpi-icon-wrap.peers-kpi { background: #e0f2fe; color: #0284c7; }
+.kpi-icon-wrap.disc-kpi { background: #f3e8ff; color: #9333ea; }
+.kpi-icon-wrap.events-kpi { background: #dcfce7; color: #16a34a; }
+.kpi-icon-wrap.opps-kpi { background: #fef3c7; color: #d97706; }
+
+.kpi-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.kpi-count {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1.1;
+}
+
+.kpi-label {
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* ==========================================================================
    Completion Callout Banner
    ========================================================================== */
 .completion-callout {

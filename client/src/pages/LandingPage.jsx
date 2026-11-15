@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'motion/react';
 import { useAuth } from '../context/AuthContext';
 import {
   Users, Share2, MessageSquare, BookOpen, Briefcase, Calendar,
   ArrowRight, ShieldCheck, CheckCircle2, Award, Sparkles, Building,
-  Compass, ExternalLink, MapPin
+  Compass, ExternalLink, MapPin, Zap, Code, Trophy
 } from 'lucide-react';
+import ConnectedCommunityCanvas from '../components/3d/ConnectedCommunityCanvas';
 import bitmCampusImg from '../assets/images/bitm-campus.jpg';
 import bitmCampusTheatre from '../assets/images/bitm-campus-theatre.jpg';
 import bitmLogo from '../assets/images/bitm-logo.png';
@@ -67,10 +69,18 @@ const LandingPage = () => {
 
   return (
     <div className="landing-page">
-      {/* Hero Section */}
+      {/* 3D Interactive Hero Section */}
       <section className="hero-section">
+        {/* Three.js 3D Connected Community Canvas Background */}
+        <ConnectedCommunityCanvas className="hero-canvas-background" />
+
         <div className="container hero-container">
-          <div className="hero-content">
+          <motion.div
+            className="hero-content"
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, ease: 'easeOut' }}
+          >
             <div className="hero-badge">
               <Sparkles size={16} /> Official Ballari Institute of Technology &amp; Management Platform
             </div>
@@ -79,7 +89,8 @@ const LandingPage = () => {
               <span className="hero-highlight">Learn. Grow Together.</span>
             </h1>
             <p className="hero-subtitle">
-              A dedicated professional networking and knowledge-sharing platform for BITM students. Build your professional portfolio, collaborate on engineering projects, and accelerate your placement preparation.
+              <strong>Your college community. Your professional network. Your future.</strong><br />
+              A dedicated professional networking and knowledge-sharing platform for BITM students. Build your portfolio, collaborate on engineering projects, and accelerate your placement preparation.
             </p>
 
             <div className="hero-cta-group">
@@ -113,22 +124,68 @@ const LandingPage = () => {
                 <span>Safe Campus Community</span>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="hero-visual">
+          <motion.div
+            className="hero-visual"
+            initial={{ opacity: 0, scale: 0.94 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
+          >
+            {/* Campus Card with Floating Glassmorphic Profile Badges */}
             <div className="campus-image-card">
               <img
                 src={bitmCampusImg}
                 alt="BITM Campus Ballari - Admin & PG Block"
                 className="campus-img"
               />
+
+              {/* Floating Profile Card 1: Student Dev */}
+              <motion.div
+                className="floating-hero-card float-card-top-left"
+                animate={{ y: [0, -7, 0] }}
+                transition={{ repeat: Infinity, duration: 4.5, ease: 'easeInOut' }}
+              >
+                <div className="float-card-avatar">MS</div>
+                <div className="float-card-text">
+                  <div className="float-card-name">Mohammed Zaid</div>
+                  <div className="float-card-role"><Code size={11} /> 7th Sem CSE • React &amp; Cloud</div>
+                </div>
+              </motion.div>
+
+              {/* Floating Profile Card 2: Hackathon Winner */}
+              <motion.div
+                className="floating-hero-card float-card-bottom-right"
+                animate={{ y: [0, 8, 0] }}
+                transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut', delay: 0.8 }}
+              >
+                <div className="float-card-avatar highlight">PR</div>
+                <div className="float-card-text">
+                  <div className="float-card-name">Pooja Reddy</div>
+                  <div className="float-card-role"><Trophy size={11} /> Smart India Hackathon Winner</div>
+                </div>
+              </motion.div>
+
+              {/* Floating Profile Card 3: Placement Network */}
+              <motion.div
+                className="floating-hero-card float-card-top-right"
+                animate={{ y: [0, -5, 0] }}
+                transition={{ repeat: Infinity, duration: 4.2, ease: 'easeInOut', delay: 1.4 }}
+              >
+                <div className="float-card-badge-icon"><Zap size={14} /></div>
+                <div className="float-card-text">
+                  <div className="float-card-name">120+ Placement Drives</div>
+                  <div className="float-card-role">Campus Recruitment Hub</div>
+                </div>
+              </motion.div>
+
               <div className="campus-caption">
                 <div className="caption-badge">Jnana Gangotri Campus</div>
                 <h4>Ballari Institute of Technology &amp; Management</h4>
                 <p>Administrative &amp; PG Block • Hospet Road, Ballari - 583104 • NAAC 'A+'</p>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 

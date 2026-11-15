@@ -401,7 +401,7 @@ textarea.form-control {
   gap: var(--space-lg);
   max-width: 1300px;
   margin: var(--space-lg) auto;
-  padding: 0 var(--space-md);
+  padding: 0 var(--space-md) 95px var(--space-md);
   align-items: start;
 }
 

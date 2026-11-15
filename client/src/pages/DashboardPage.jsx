@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'motion/react';
 import { useAuth } from '../context/AuthContext';
 import Sidebar from '../components/Sidebar';
 import api from '../services/api';
 import {
   Users, Flame, HelpCircle, Briefcase, Calendar,
   ArrowRight, Heart, MessageSquare, ExternalLink, PlusCircle,
-  Sparkles, CheckCircle2, UserCheck, Clock, MapPin
+  Sparkles, CheckCircle2, UserCheck, Clock, MapPin, TrendingUp, FolderGit2
 } from 'lucide-react';
 import LoadingSpinner from '../components/LoadingSpinner';
 import '../styles/dashboard.css';
@@ -68,7 +69,12 @@ const DashboardPage = () => {
       {/* Main Dashboard Content */}
       <main className="dashboard-main">
         {/* Welcome Banner */}
-        <section className="welcome-banner card">
+        <motion.section
+          className="welcome-banner card"
+          initial={{ opacity: 0, y: -15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <div className="welcome-text">
             <h2>Welcome back, {user?.fullName}! 👋</h2>
             <p>
@@ -87,18 +93,79 @@ const DashboardPage = () => {
               <HelpCircle size={15} /> Ask Question
             </Link>
           </div>
-        </section>
+        </motion.section>
 
-        {/* Profile Completion Recommendation if under 85% */}
-        {completion < 85 && (
-          <div className="completion-callout card">
+        {/* Animated KPI Quick Stats Strip */}
+        <motion.div
+          className="dashboard-quick-stats"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15, duration: 0.5 }}
+        >
+          <Link to="/feed" className="kpi-mini-card">
+            <div className="kpi-icon-wrap feed-kpi"><Flame size={18} /></div>
+            <div className="kpi-meta">
+              <span className="kpi-count">{recentPosts.length}+</span>
+              <span className="kpi-label">Campus Posts</span>
+            </div>
+          </Link>
+          <Link to="/explore" className="kpi-mini-card">
+            <div className="kpi-icon-wrap peers-kpi"><Users size={18} /></div>
+            <div className="kpi-meta">
+              <span className="kpi-count">{suggestedStudents.length}+</span>
+              <span className="kpi-label">Peer Suggestions</span>
+            </div>
+          </Link>
+          <Link to="/discussions" className="kpi-mini-card">
+            <div className="kpi-icon-wrap disc-kpi"><HelpCircle size={18} /></div>
+            <div className="kpi-meta">
+              <span className="kpi-count">{discussions.length}+</span>
+              <span className="kpi-label">Discussions</span>
+            </div>
+          </Link>
+          <Link to="/events" className="kpi-mini-card">
+            <div className="kpi-icon-wrap events-kpi"><Calendar size={18} /></div>
+            <div className="kpi-meta">
+              <span className="kpi-count">{upcomingEvents.length}</span>
+              <span className="kpi-label">Upcoming Events</span>
+            </div>
+          </Link>
+          <Link to="/opportunities" className="kpi-mini-card">
+            <div className="kpi-icon-wrap opps-kpi"><Briefcase size={18} /></div>
+            <div className="kpi-meta">
+              <span className="kpi-count">{recentOpportunities.length}+</span>
+              <span className="kpi-label">Opportunities</span>
+            </div>
+          </Link>
+        </motion.div>
+
+        {/* Profile Completion Recommendation with Animated Progress Bar */}
+        {completion < 100 && (
+          <motion.div
+            className="completion-callout card"
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.25, duration: 0.45 }}
+          >
             <div className="completion-callout-info">
               <div className="completion-badge-icon">
                 <Sparkles size={20} />
               </div>
-              <div>
-                <h4>Your Profile is {completion}% Complete</h4>
-                <p>
+              <div style={{ flex: 1 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+                  <h4 style={{ margin: 0 }}>Your Profile is {completion}% Complete</h4>
+                  <span style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--primary)' }}>{completion}%</span>
+                </div>
+                <div className="completion-bar-track" style={{ height: 8, background: '#e2e8f0', borderRadius: 4, overflow: 'hidden', marginBottom: 8 }}>
+                  <motion.div
+                    className="completion-bar-fill"
+                    style={{ height: '100%', background: 'linear-gradient(90deg, #3b82f6, #10b981)', borderRadius: 4 }}
+                    initial={{ width: 0 }}
+                    animate={{ width: `${completion}%` }}
+                    transition={{ duration: 1.2, ease: 'easeOut', delay: 0.3 }}
+                  />
+                </div>
+                <p style={{ margin: 0 }}>
                   Add your GitHub link, bio, and project portfolio to stand out for project collaborations and campus placements.
                 </p>
               </div>
@@ -106,7 +173,7 @@ const DashboardPage = () => {
             <Link to="/profile" className="btn btn-primary btn-sm">
               Complete Profile
             </Link>
-          </div>
+          </motion.div>
         )}
 
         {loading ? (

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'motion/react';
 import Sidebar from '../components/Sidebar';
 import LoadingSpinner from '../components/LoadingSpinner';
 import api from '../services/api';
@@ -191,7 +192,14 @@ const ExploreStudentsPage = () => {
         ) : (
           <div className="student-cards-grid">
             {students.map((student) => (
-              <div key={student._id} className="card student-card card-hoverable">
+              <motion.div
+                key={student._id}
+                className="card student-card card-hoverable"
+                initial={{ opacity: 0, scale: 0.96, y: 10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 0.25 }}
+                whileHover={{ y: -4, transition: { duration: 0.18 } }}
+              >
                 <div className="student-card-top">
                   <div className="student-avatar-box">
                     {student.profilePicture ? (
@@ -254,15 +262,16 @@ const ExploreStudentsPage = () => {
                       <Check size={14} /> Accept Request
                     </button>
                   ) : (
-                    <button
+                    <motion.button
                       className="btn btn-outline-primary btn-sm"
                       onClick={() => handleSendRequest(student._id)}
+                      whileTap={{ scale: 0.94 }}
                     >
                       <UserPlus size={14} /> Connect
-                    </button>
+                    </motion.button>
                   )}
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         )}
