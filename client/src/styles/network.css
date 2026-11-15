@@ -92,7 +92,8 @@
   font-weight: 600;
 }
 
-.filter-select, .filter-text-input {
+.filter-select,
+.filter-text-input {
   padding: 7px 12px;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
@@ -103,7 +104,8 @@
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-.filter-select:focus, .filter-text-input:focus {
+.filter-select:focus,
+.filter-text-input:focus {
   border-color: var(--link-blue);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
 }
@@ -431,11 +433,14 @@
   .student-cards-grid {
     grid-template-columns: 1fr;
   }
+
   .filters-row {
     flex-direction: column;
     align-items: stretch;
   }
-  .filter-select, .filter-text-input {
+
+  .filter-select,
+  .filter-text-input {
     width: 100%;
   }
 }

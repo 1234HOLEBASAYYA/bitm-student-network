@@ -122,7 +122,8 @@
   align-items: start;
 }
 
-.dashboard-col-left, .dashboard-col-right {
+.dashboard-col-left,
+.dashboard-col-right {
   display: flex;
   flex-direction: column;
   gap: var(--space-lg);
