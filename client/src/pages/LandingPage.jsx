@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import {
   Users, Share2, MessageSquare, BookOpen, Briefcase, Calendar,
   ArrowRight, ShieldCheck, CheckCircle2, Award, Sparkles, Building,
-  Compass, ExternalLink, MapPin
+  Compass, ExternalLink, MapPin, Play, Pause, Video
 } from 'lucide-react';
 import bitmCampusImg from '../assets/images/bitm-campus.jpg';
 import bitmCampusTheatre from '../assets/images/bitm-campus-theatre.jpg';
@@ -13,6 +13,20 @@ import '../styles/landing.css';
 
 const LandingPage = () => {
   const { isAuthenticated } = useAuth();
+  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handlePlayPause = () => {
+    if (videoRef.current) {
+      if (videoRef.current.paused) {
+        videoRef.current.play();
+        setIsPlaying(true);
+      } else {
+        videoRef.current.pause();
+        setIsPlaying(false);
+      }
+    }
+  };
 
   const features = [
     {
@@ -126,6 +140,67 @@ const LandingPage = () => {
                 <div className="caption-badge">Jnana Gangotri Campus</div>
                 <h4>Ballari Institute of Technology &amp; Management</h4>
                 <p>Administrative &amp; PG Block • Hospet Road, Ballari - 583104 • NAAC 'A+'</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Introductory Video Section */}
+      <section className="intro-video-section">
+        <div className="container intro-video-container">
+          <div className="intro-video-header">
+            <span className="section-tag">
+              <Video size={15} style={{ marginRight: '6px', verticalAlign: 'middle' }} />
+              Platform Introduction
+            </span>
+            <h2 className="intro-video-title">Connect. Collaborate. Learn. Grow.</h2>
+            <p className="intro-video-desc">
+              Welcome to the BITM Student Network — Ballari Institute of Technology and Management's dedicated academic and professional ecosystem. Watch the introductory tour below to see how our platform empowers students to build professional profiles, collaborate across engineering branches, share technical knowledge, and prepare for premier placements.
+            </p>
+          </div>
+
+          <div className="video-player-wrapper">
+            <div className="video-player-card">
+              <video
+                ref={videoRef}
+                className="main-intro-video"
+                controls
+                playsInline
+                preload="metadata"
+                poster={bitmCampusImg}
+                onPlay={() => setIsPlaying(true)}
+                onPause={() => setIsPlaying(false)}
+              >
+                <source src="/videos/bitm-intro.mp4" type="video/mp4" />
+                Your browser does not support HTML5 video playback.
+              </video>
+
+              {!isPlaying && (
+                <button
+                  type="button"
+                  className="video-play-overlay-btn"
+                  onClick={handlePlayPause}
+                  aria-label="Play BITM Student Network introductory video"
+                >
+                  <div className="play-icon-circle">
+                    <Play size={34} className="play-triangle-icon" />
+                  </div>
+                  <span className="play-overlay-badge">
+                    Watch Introduction Video
+                  </span>
+                </button>
+              )}
+            </div>
+
+            <div className="video-meta-bar">
+              <div className="video-meta-left">
+                <Sparkles size={16} className="text-accent" />
+                <span>BITM Jnana Gangotri Campus • Official Platform Walkthrough</span>
+              </div>
+              <div className="video-meta-badges">
+                <span className="badge badge-primary">MP4 HD 1080p</span>
+                <span className="badge badge-dept">Official Video</span>
               </div>
             </div>
           </div>

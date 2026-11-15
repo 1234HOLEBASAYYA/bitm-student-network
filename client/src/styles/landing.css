@@ -131,6 +131,196 @@
   color: var(--text-muted);
 }
 
+/* ==========================================================================
+   Introductory Video Section
+   ========================================================================== */
+.intro-video-section {
+  padding: 72px 0 80px;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.intro-video-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.intro-video-header {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto 36px;
+}
+
+.intro-video-title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 14px;
+  letter-spacing: -0.4px;
+  line-height: 1.25;
+}
+
+.intro-video-desc {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.video-player-wrapper {
+  width: 100%;
+  max-width: 960px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.video-player-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #0f172a;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 20px 40px -15px rgba(30, 58, 138, 0.22), 0 4px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border-color);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.video-player-card:hover {
+  box-shadow: 0 24px 48px -12px rgba(30, 58, 138, 0.28), 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.main-intro-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  outline: none;
+}
+
+/* Play button overlay */
+.video-play-overlay-btn {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.3) 0%, rgba(15, 23, 42, 0.6) 100%);
+  border: none;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  z-index: 2;
+}
+
+.video-play-overlay-btn:hover {
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.5) 100%);
+}
+
+.play-icon-circle {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 25px rgba(30, 58, 138, 0.45);
+  transition: transform var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.play-triangle-icon {
+  margin-left: 4px; /* optical center adjustment */
+}
+
+.video-play-overlay-btn:hover .play-icon-circle {
+  transform: scale(1.1);
+  background: var(--primary-hover);
+  box-shadow: 0 14px 32px rgba(30, 58, 138, 0.55);
+}
+
+.play-overlay-badge {
+  color: #ffffff;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(8px);
+  padding: 8px 20px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.video-play-overlay-btn:hover .play-overlay-badge {
+  background: rgba(30, 58, 138, 0.9);
+  transform: translateY(-2px);
+}
+
+/* Video Meta Bar below player */
+.video-meta-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.video-meta-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.video-meta-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (max-width: 768px) {
+  .intro-video-section {
+    padding: 48px 0 60px;
+  }
+  .intro-video-title {
+    font-size: 1.7rem;
+  }
+  .intro-video-desc {
+    font-size: 0.95rem;
+  }
+  .play-icon-circle {
+    width: 60px;
+    height: 60px;
+  }
+  .play-triangle-icon {
+    width: 26px;
+    height: 26px;
+  }
+  .play-overlay-badge {
+    font-size: 0.82rem;
+    padding: 6px 14px;
+  }
+  .video-meta-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
 /* Statistics Section */
 .stats-section {
   background: var(--primary-navy);
