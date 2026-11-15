@@ -9,6 +9,10 @@ import {
   HelpCircle, MessageSquare, ThumbsUp, CheckCircle2, Search, PlusCircle,
   Tag, Eye, Clock, User, Filter, Check, ArrowRight, Trash2
 } from 'lucide-react';
+import { ScrollProgress } from '@/components/core/scroll-progress';
+import { Spotlight } from '@/components/core/spotlight';
+import { Magnetic } from '@/components/core/magnetic';
+import { AnimatedGroup } from '@/components/core/animated-group';
 import '../styles/discussions.css';
 
 const DiscussionsPage = () => {
@@ -190,6 +194,18 @@ const DiscussionsPage = () => {
 
   return (
     <div className="dashboard-layout">
+      <ScrollProgress
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: '3px',
+          background: 'linear-gradient(90deg, #2563eb, #38bdf8, #10b981)',
+          zIndex: 9999,
+          transformOrigin: '0%',
+        }}
+      />
       <Sidebar />
 
       <main className="dashboard-main discussions-page">
@@ -201,12 +217,14 @@ const DiscussionsPage = () => {
               Ask questions, exchange technical solutions, discuss coding challenges, and learn collaboratively from peers.
             </p>
           </div>
-          <button
-            className="btn btn-primary btn-sm"
-            onClick={() => setIsAskModalOpen(true)}
-          >
-            <PlusCircle size={16} /> Ask a Question
-          </button>
+          <Magnetic intensity={0.25} range={55}>
+            <button
+              className="btn btn-primary btn-sm"
+              onClick={() => setIsAskModalOpen(true)}
+            >
+              <PlusCircle size={16} /> Ask a Question
+            </button>
+          </Magnetic>
         </div>
 
         {/* If viewing a selected discussion thread */}
@@ -322,14 +340,16 @@ const DiscussionsPage = () => {
                     required
                   ></textarea>
 
-                  <button
-                    type="submit"
-                    className="btn btn-primary btn-sm"
-                    style={{ marginTop: '12px' }}
-                    disabled={submittingAnswer || !answerContent.trim()}
-                  >
-                    {submittingAnswer ? 'Posting Answer...' : 'Post Your Answer'}
-                  </button>
+                  <Magnetic intensity={0.2} range={40}>
+                    <button
+                      type="submit"
+                      className="btn btn-primary btn-sm"
+                      style={{ marginTop: '12px' }}
+                      disabled={submittingAnswer || !answerContent.trim()}
+                    >
+                      {submittingAnswer ? 'Posting Answer...' : 'Post Your Answer'}
+                    </button>
+                  </Magnetic>
                 </form>
               </div>
             </div>
@@ -394,9 +414,18 @@ const DiscussionsPage = () => {
                 </button>
               </div>
             ) : (
-              <div className="discussions-stream">
+              <AnimatedGroup className="discussions-stream" preset="blur-slide">
                 {discussions.map((d) => (
-                  <div key={d._id} className="card discussion-row-card card-hoverable">
+                  <div
+                    key={d._id}
+                    className="card discussion-row-card card-hoverable"
+                    style={{ position: 'relative', overflow: 'hidden' }}
+                  >
+                    <Spotlight
+                      className="from-blue-500/10 via-indigo-500/5 to-transparent"
+                      size={180}
+                    />
+
                     <div className="disc-row-left">
                       <div className="disc-stat-box">
                         <span className="disc-stat-num">{d.answersCount || 0}</span>
@@ -453,7 +482,7 @@ const DiscussionsPage = () => {
                     )}
                   </div>
                 ))}
-              </div>
+              </AnimatedGroup>
             )}
           </>
         )}

@@ -184,11 +184,18 @@
 }
 
 @media (max-width: 480px) {
+  .apple-dock-fixed-wrapper {
+    bottom: 8px;
+    max-width: calc(100vw - 8px);
+  }
+
   .apple-dock-inner {
-    gap: 4px;
+    gap: 3px;
+    height: 42px;
   }
 
   .apple-dock-container {
-    padding: 3px 6px;
+    padding: 2px 5px;
+    border-radius: 20px;
   }
 }

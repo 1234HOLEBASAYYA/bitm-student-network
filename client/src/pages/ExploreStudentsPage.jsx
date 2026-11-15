@@ -8,6 +8,10 @@ import {
   Search, Filter, Users, UserPlus, Check, Clock, UserCheck,
   Code, GraduationCap, X, ChevronRight
 } from 'lucide-react';
+import { Spotlight } from '@/components/core/spotlight';
+import { Tilt } from '@/components/core/tilt';
+import { Magnetic } from '@/components/core/magnetic';
+import { AnimatedGroup } from '@/components/core/animated-group';
 import '../styles/network.css';
 
 const ExploreStudentsPage = () => {
@@ -190,90 +194,108 @@ const ExploreStudentsPage = () => {
             </button>
           </div>
         ) : (
-          <div className="student-cards-grid">
+          <AnimatedGroup className="student-cards-grid" preset="blur-slide">
             {students.map((student) => (
-              <motion.div
+              <Tilt
                 key={student._id}
-                className="card student-card card-hoverable"
-                initial={{ opacity: 0, scale: 0.96, y: 10 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ duration: 0.25 }}
-                whileHover={{ y: -4, transition: { duration: 0.18 } }}
+                rotationFactor={7}
+                isRevese={false}
+                style={{ height: '100%' }}
               >
-                <div className="student-card-top">
-                  <div className="student-avatar-box">
-                    {student.profilePicture ? (
-                      <img
-                        src={student.profilePicture}
-                        alt={student.fullName}
-                        className="student-avatar"
-                      />
-                    ) : (
-                      <div className="student-avatar-fallback">
-                        {student.fullName.charAt(0)}
+                <div
+                  className="card student-card"
+                  style={{
+                    position: 'relative',
+                    overflow: 'hidden',
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <Spotlight
+                    className="from-blue-500/10 via-indigo-500/5 to-transparent"
+                    size={160}
+                  />
+
+                  <div>
+                    <div className="student-card-top">
+                      <div className="student-avatar-box">
+                        {student.profilePicture ? (
+                          <img
+                            src={student.profilePicture}
+                            alt={student.fullName}
+                            className="student-avatar"
+                          />
+                        ) : (
+                          <div className="student-avatar-fallback">
+                            {student.fullName.charAt(0)}
+                          </div>
+                        )}
                       </div>
+                      <span className="student-usn-badge">{student.usn}</span>
+                    </div>
+
+                    <div className="student-card-info">
+                      <Link to={`/profile/${student._id}`} className="student-name">
+                        {student.fullName}
+                      </Link>
+                      <span className="student-dept">{student.department}</span>
+                      <span className="student-sem-sec">
+                        Semester {student.semester || 1} • Section {student.section || 'A'}
+                      </span>
+
+                      <p className="student-headline-snippet">
+                        {student.headline || `BITM Student • ${student.department}`}
+                      </p>
+
+                      {/* Skills Preview */}
+                      <div className="student-skills-preview">
+                        {student.skills && student.skills.slice(0, 3).map((sk, idx) => (
+                          <span key={idx} className="skill-chip">{sk}</span>
+                        ))}
+                        {student.skills && student.skills.length > 3 && (
+                          <span className="skill-chip-more">+{student.skills.length - 3}</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="student-card-actions" style={{ marginTop: '16px' }}>
+                    <Link to={`/profile/${student._id}`} className="btn btn-outline btn-sm">
+                      View Profile
+                    </Link>
+
+                    {student.connectionStatus === 'connected' ? (
+                      <span className="status-badge connected">
+                        <UserCheck size={14} /> Connected
+                      </span>
+                    ) : student.connectionStatus === 'sent' ? (
+                      <span className="status-badge pending">
+                        <Clock size={14} /> Request Sent
+                      </span>
+                    ) : student.connectionStatus === 'received' ? (
+                      <button
+                        className="btn btn-primary btn-sm"
+                        onClick={() => handleAcceptRequest(student.requestId, student._id)}
+                      >
+                        <Check size={14} /> Accept Request
+                      </button>
+                    ) : (
+                      <Magnetic intensity={0.25} range={50}>
+                        <button
+                          className="btn btn-outline-primary btn-sm"
+                          onClick={() => handleSendRequest(student._id)}
+                        >
+                          <UserPlus size={14} /> Connect
+                        </button>
+                      </Magnetic>
                     )}
                   </div>
-                  <span className="student-usn-badge">{student.usn}</span>
                 </div>
-
-                <div className="student-card-info">
-                  <Link to={`/profile/${student._id}`} className="student-name">
-                    {student.fullName}
-                  </Link>
-                  <span className="student-dept">{student.department}</span>
-                  <span className="student-sem-sec">
-                    Semester {student.semester || 1} • Section {student.section || 'A'}
-                  </span>
-
-                  <p className="student-headline-snippet">
-                    {student.headline || `BITM Student • ${student.department}`}
-                  </p>
-
-                  {/* Skills Preview */}
-                  <div className="student-skills-preview">
-                    {student.skills && student.skills.slice(0, 3).map((sk, idx) => (
-                      <span key={idx} className="skill-chip">{sk}</span>
-                    ))}
-                    {student.skills && student.skills.length > 3 && (
-                      <span className="skill-chip-more">+{student.skills.length - 3}</span>
-                    )}
-                  </div>
-                </div>
-
-                <div className="student-card-actions">
-                  <Link to={`/profile/${student._id}`} className="btn btn-outline btn-sm">
-                    View Profile
-                  </Link>
-
-                  {student.connectionStatus === 'connected' ? (
-                    <span className="status-badge connected">
-                      <UserCheck size={14} /> Connected
-                    </span>
-                  ) : student.connectionStatus === 'sent' ? (
-                    <span className="status-badge pending">
-                      <Clock size={14} /> Request Sent
-                    </span>
-                  ) : student.connectionStatus === 'received' ? (
-                    <button
-                      className="btn btn-primary btn-sm"
-                      onClick={() => handleAcceptRequest(student.requestId, student._id)}
-                    >
-                      <Check size={14} /> Accept Request
-                    </button>
-                  ) : (
-                    <motion.button
-                      className="btn btn-outline-primary btn-sm"
-                      onClick={() => handleSendRequest(student._id)}
-                      whileTap={{ scale: 0.94 }}
-                    >
-                      <UserPlus size={14} /> Connect
-                    </motion.button>
-                  )}
-                </div>
-              </motion.div>
+              </Tilt>
             ))}
-          </div>
+          </AnimatedGroup>
         )}
       </main>
     </div>

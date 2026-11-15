@@ -5,9 +5,23 @@ import { useAuth } from '../context/AuthContext';
 import {
   Users, Share2, MessageSquare, BookOpen, Briefcase, Calendar,
   ArrowRight, ShieldCheck, CheckCircle2, Award, Sparkles, Building,
-  Compass, ExternalLink, MapPin, Zap, Code, Trophy
+  Compass, ExternalLink, MapPin, Zap, Code, Trophy, ChevronDown
 } from 'lucide-react';
 import ConnectedCommunityCanvas from '../components/3d/ConnectedCommunityCanvas';
+import { TextEffect } from '@/components/core/text-effect';
+import { TextLoop } from '@/components/core/text-loop';
+import { TextShimmer } from '@/components/core/text-shimmer';
+import { AnimatedNumber } from '@/components/core/animated-number';
+import { Magnetic } from '@/components/core/magnetic';
+import { AnimatedGroup } from '@/components/core/animated-group';
+import { InView } from '@/components/core/in-view';
+import { Spotlight } from '@/components/core/spotlight';
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from '@/components/core/accordion';
 import bitmCampusImg from '../assets/images/bitm-campus.jpg';
 import bitmCampusTheatre from '../assets/images/bitm-campus-theatre.jpg';
 import bitmLogo from '../assets/images/bitm-logo.png';
@@ -50,10 +64,10 @@ const LandingPage = () => {
   ];
 
   const stats = [
-    { number: '1,200+', label: 'Registered Students' },
-    { number: '8', label: 'Engineering Departments' },
-    { number: '150+', label: 'Collaborative Projects' },
-    { number: '95%', label: 'Active Placement Drives' }
+    { number: 1200, suffix: '+', label: 'Registered Students' },
+    { number: 8, suffix: '', label: 'Engineering Departments' },
+    { number: 150, suffix: '+', label: 'Collaborative Projects' },
+    { number: 95, suffix: '%', label: 'Active Placement Drives' }
   ];
 
   const departments = [
@@ -82,30 +96,49 @@ const LandingPage = () => {
             transition={{ duration: 0.7, ease: 'easeOut' }}
           >
             <div className="hero-badge">
-              <Sparkles size={16} /> Official Ballari Institute of Technology &amp; Management Platform
+              <Sparkles size={16} />
+              <TextShimmer duration={2.4} spread={2.5} className="hero-shimmer-badge">
+                Official Ballari Institute of Technology &amp; Management Platform
+              </TextShimmer>
             </div>
             <h1 className="hero-headline">
-              Connect. Collaborate. <br />
-              <span className="hero-highlight">Learn. Grow Together.</span>
+              <TextEffect per="word" preset="blur" delay={0.15}>
+                Connect. Collaborate. Learn. Grow Together.
+              </TextEffect>
             </h1>
-            <p className="hero-subtitle">
-              <strong>Your college community. Your professional network. Your future.</strong><br />
-              A dedicated professional networking and knowledge-sharing platform for BITM students. Build your portfolio, collaborate on engineering projects, and accelerate your placement preparation.
-            </p>
+            <div className="hero-subtitle">
+              <div className="hero-loop-tagline">
+                <strong>Your college community. </strong>
+                <TextLoop interval={3} className="hero-dynamic-loop">
+                  <span>Your professional network.</span>
+                  <span>Your pathway to placement success.</span>
+                  <span>Your future in engineering.</span>
+                </TextLoop>
+              </div>
+              <p style={{ marginTop: 8 }}>
+                A dedicated professional networking and knowledge-sharing platform for BITM students. Build your portfolio, collaborate on engineering projects, and accelerate your placement preparation.
+              </p>
+            </div>
 
             <div className="hero-cta-group">
               {isAuthenticated ? (
-                <Link to="/dashboard" className="btn btn-primary btn-lg">
-                  Go to Your Dashboard <ArrowRight size={18} />
-                </Link>
+                <Magnetic intensity={0.4} range={80}>
+                  <Link to="/dashboard" className="btn btn-primary btn-lg magnetic-cta">
+                    <span>Go to Your Dashboard</span> <ArrowRight size={18} />
+                  </Link>
+                </Magnetic>
               ) : (
                 <>
-                  <Link to="/register" className="btn btn-primary btn-lg">
-                    Join BITM Network <ArrowRight size={18} />
-                  </Link>
-                  <Link to="/login" className="btn btn-outline btn-lg">
-                    Student Login
-                  </Link>
+                  <Magnetic intensity={0.4} range={80}>
+                    <Link to="/register" className="btn btn-primary btn-lg magnetic-cta">
+                      <span>Join BITM Network</span> <ArrowRight size={18} />
+                    </Link>
+                  </Magnetic>
+                  <Magnetic intensity={0.4} range={80}>
+                    <Link to="/login" className="btn btn-outline btn-lg magnetic-cta">
+                      <span>Student Login</span>
+                    </Link>
+                  </Magnetic>
                 </>
               )}
             </div>
@@ -192,14 +225,19 @@ const LandingPage = () => {
       {/* Community Statistics Section */}
       <section className="stats-section">
         <div className="container">
-          <div className="stats-grid">
-            {stats.map((stat, idx) => (
-              <div key={idx} className="stat-card">
-                <h3 className="stat-num">{stat.number}</h3>
-                <p className="stat-label">{stat.label}</p>
-              </div>
-            ))}
-          </div>
+          <InView once={true}>
+            <div className="stats-grid">
+              {stats.map((stat, idx) => (
+                <div key={idx} className="stat-card">
+                  <h3 className="stat-num">
+                    <AnimatedNumber value={stat.number} />
+                    {stat.suffix}
+                  </h3>
+                  <p className="stat-label">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+          </InView>
         </div>
       </section>
 
@@ -251,15 +289,18 @@ const LandingPage = () => {
             </p>
           </div>
 
-          <div className="features-grid">
-            {features.map((feat, idx) => (
-              <div key={idx} className="card card-hoverable feature-card">
-                <div className="feature-icon-box">{feat.icon}</div>
-                <h3 className="feature-title">{feat.title}</h3>
-                <p className="feature-desc">{feat.desc}</p>
-              </div>
-            ))}
-          </div>
+          <InView once={true}>
+            <AnimatedGroup preset="blur-slide" className="features-grid">
+              {features.map((feat, idx) => (
+                <div key={idx} className="card card-hoverable feature-card relative overflow-hidden" style={{ position: 'relative', overflow: 'hidden' }}>
+                  <Spotlight size={160} />
+                  <div className="feature-icon-box">{feat.icon}</div>
+                  <h3 className="feature-title">{feat.title}</h3>
+                  <p className="feature-desc">{feat.desc}</p>
+                </div>
+              ))}
+            </AnimatedGroup>
+          </InView>
         </div>
       </section>
 
@@ -367,12 +408,66 @@ const LandingPage = () => {
                 </li>
               </ul>
               <div className="why-cta">
-                <Link to="/register" className="btn btn-primary btn-lg">
-                  Create Your Free Student Profile <ArrowRight size={18} />
-                </Link>
+                <Magnetic intensity={0.4} range={90}>
+                  <Link to="/register" className="btn btn-primary btn-lg magnetic-cta">
+                    <span>Create Your Free Student Profile</span> <ArrowRight size={18} />
+                  </Link>
+                </Magnetic>
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Frequently Asked Questions Section */}
+      <section className="faq-section" style={{ padding: '80px 0', background: 'var(--bg-subtle)' }}>
+        <div className="container" style={{ maxWidth: 860 }}>
+          <div className="section-header" style={{ textAlign: 'center', marginBottom: 36 }}>
+            <span className="section-tag">Frequently Asked Questions</span>
+            <h2>Common Queries About BITM Student Network</h2>
+            <p className="section-subtitle">
+              Everything you need to know about student accounts, project teams, and campus placements.
+            </p>
+          </div>
+
+          <Accordion className="demo-accordion-wrap">
+            <AccordionItem value="faq-1" className="demo-accordion-item">
+              <AccordionTrigger className="demo-accordion-trigger">
+                <span>Who is eligible to register on BITM Student Network?</span>
+                <ChevronDown size={16} />
+              </AccordionTrigger>
+              <AccordionContent className="demo-accordion-content">
+                Any currently enrolled undergraduate or postgraduate engineering or MBA student at Ballari Institute of Technology and Management (BITM) with a valid USN. Faculty mentors and alumni can also request account access.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="faq-2" className="demo-accordion-item">
+              <AccordionTrigger className="demo-accordion-trigger">
+                <span>How can I find teammates for hackathons and mini-projects?</span>
+                <ChevronDown size={16} />
+              </AccordionTrigger>
+              <AccordionContent className="demo-accordion-content">
+                Navigate to the Projects section to publish your project concept and specify open roles (e.g., Frontend, Python, IoT, ML). Other students can submit collaboration requests which you can accept with one click.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="faq-3" className="demo-accordion-item">
+              <AccordionTrigger className="demo-accordion-trigger">
+                <span>How are placement and internship drives updated?</span>
+                <ChevronDown size={16} />
+              </AccordionTrigger>
+              <AccordionContent className="demo-accordion-content">
+                Verified training and placement officers update campus drives with eligibility criteria, application links, and deadlines in real-time. Students receive immediate notification badges when a new drive opens.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="faq-4" className="demo-accordion-item">
+              <AccordionTrigger className="demo-accordion-trigger">
+                <span>Is my student data and password secure?</span>
+                <ChevronDown size={16} />
+              </AccordionTrigger>
+              <AccordionContent className="demo-accordion-content">
+                Yes. All passwords are encrypted with industry-standard bcrypt hashing. Sessions are protected with JSON Web Tokens (JWT) and role-based access control, ensuring zero data leakage.
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
       </section>
     </div>

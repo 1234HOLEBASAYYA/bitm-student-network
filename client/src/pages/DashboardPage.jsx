@@ -10,6 +10,11 @@ import {
   Sparkles, CheckCircle2, UserCheck, Clock, MapPin, TrendingUp, FolderGit2
 } from 'lucide-react';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { BorderTrail } from '@/components/core/border-trail';
+import { AnimatedNumber } from '@/components/core/animated-number';
+import { Spotlight } from '@/components/core/spotlight';
+import { AnimatedGroup } from '@/components/core/animated-group';
+import { Magnetic } from '@/components/core/magnetic';
 import '../styles/dashboard.css';
 
 const DashboardPage = () => {
@@ -70,11 +75,13 @@ const DashboardPage = () => {
       <main className="dashboard-main">
         {/* Welcome Banner */}
         <motion.section
-          className="welcome-banner card"
+          className="welcome-banner card relative overflow-hidden"
+          style={{ position: 'relative', overflow: 'hidden' }}
           initial={{ opacity: 0, y: -15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
+          <Spotlight size={250} />
           <div className="welcome-text">
             <h2>Welcome back, {user?.fullName}! 👋</h2>
             <p>
@@ -86,12 +93,16 @@ const DashboardPage = () => {
           </div>
 
           <div className="banner-quick-actions">
-            <Link to="/feed" className="btn btn-secondary btn-sm">
-              <PlusCircle size={15} /> Create Post
-            </Link>
-            <Link to="/discussions" className="btn btn-outline btn-sm">
-              <HelpCircle size={15} /> Ask Question
-            </Link>
+            <Magnetic intensity={0.4} range={65}>
+              <Link to="/feed" className="btn btn-secondary btn-sm magnetic-cta">
+                <PlusCircle size={15} /> Create Post
+              </Link>
+            </Magnetic>
+            <Magnetic intensity={0.4} range={65}>
+              <Link to="/discussions" className="btn btn-outline btn-sm magnetic-cta">
+                <HelpCircle size={15} /> Ask Question
+              </Link>
+            </Magnetic>
           </div>
         </motion.section>
 
@@ -105,55 +116,63 @@ const DashboardPage = () => {
           <Link to="/feed" className="kpi-mini-card">
             <div className="kpi-icon-wrap feed-kpi"><Flame size={18} /></div>
             <div className="kpi-meta">
-              <span className="kpi-count">{recentPosts.length}+</span>
+              <span className="kpi-count"><AnimatedNumber value={recentPosts.length} />+</span>
               <span className="kpi-label">Campus Posts</span>
             </div>
           </Link>
           <Link to="/explore" className="kpi-mini-card">
             <div className="kpi-icon-wrap peers-kpi"><Users size={18} /></div>
             <div className="kpi-meta">
-              <span className="kpi-count">{suggestedStudents.length}+</span>
+              <span className="kpi-count"><AnimatedNumber value={suggestedStudents.length} />+</span>
               <span className="kpi-label">Peer Suggestions</span>
             </div>
           </Link>
           <Link to="/discussions" className="kpi-mini-card">
             <div className="kpi-icon-wrap disc-kpi"><HelpCircle size={18} /></div>
             <div className="kpi-meta">
-              <span className="kpi-count">{discussions.length}+</span>
+              <span className="kpi-count"><AnimatedNumber value={discussions.length} />+</span>
               <span className="kpi-label">Discussions</span>
             </div>
           </Link>
           <Link to="/events" className="kpi-mini-card">
             <div className="kpi-icon-wrap events-kpi"><Calendar size={18} /></div>
             <div className="kpi-meta">
-              <span className="kpi-count">{upcomingEvents.length}</span>
+              <span className="kpi-count"><AnimatedNumber value={upcomingEvents.length} /></span>
               <span className="kpi-label">Upcoming Events</span>
             </div>
           </Link>
           <Link to="/opportunities" className="kpi-mini-card">
             <div className="kpi-icon-wrap opps-kpi"><Briefcase size={18} /></div>
             <div className="kpi-meta">
-              <span className="kpi-count">{recentOpportunities.length}+</span>
+              <span className="kpi-count"><AnimatedNumber value={recentOpportunities.length} />+</span>
               <span className="kpi-label">Opportunities</span>
             </div>
           </Link>
         </motion.div>
 
-        {/* Profile Completion Recommendation with Animated Progress Bar */}
+        {/* Profile Completion Recommendation with Animated Progress Bar & BorderTrail */}
         {completion < 100 && (
           <motion.div
-            className="completion-callout card"
+            className="completion-callout card relative overflow-hidden"
+            style={{ position: 'relative', overflow: 'hidden' }}
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.25, duration: 0.45 }}
           >
-            <div className="completion-callout-info">
+            <BorderTrail
+              size={90}
+              style={{
+                background: 'linear-gradient(90deg, #10b981, #3b82f6)',
+                boxShadow: '0 0 25px 12px rgba(16, 185, 129, 0.35)'
+              }}
+            />
+            <div className="completion-callout-info" style={{ position: 'relative', zIndex: 2 }}>
               <div className="completion-badge-icon">
                 <Sparkles size={20} />
               </div>
               <div style={{ flex: 1 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-                  <h4 style={{ margin: 0 }}>Your Profile is {completion}% Complete</h4>
+                  <h4 style={{ margin: 0 }}>Your Profile is <AnimatedNumber value={completion} />% Complete</h4>
                   <span style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--primary)' }}>{completion}%</span>
                 </div>
                 <div className="completion-bar-track" style={{ height: 8, background: '#e2e8f0', borderRadius: 4, overflow: 'hidden', marginBottom: 8 }}>
@@ -170,9 +189,11 @@ const DashboardPage = () => {
                 </p>
               </div>
             </div>
-            <Link to="/profile" className="btn btn-primary btn-sm">
-              Complete Profile
-            </Link>
+            <Magnetic intensity={0.3} range={60}>
+              <Link to="/profile" className="btn btn-primary btn-sm magnetic-cta" style={{ position: 'relative', zIndex: 2 }}>
+                Complete Profile
+              </Link>
+            </Magnetic>
           </motion.div>
         )}
 
@@ -198,50 +219,52 @@ const DashboardPage = () => {
                   {recentPosts.length === 0 ? (
                     <p className="empty-widget-text">No posts yet. Be the first to share an update!</p>
                   ) : (
-                    recentPosts.map((post) => (
-                      <div key={post._id} className="dash-post-card">
-                        <div className="dash-post-author">
-                          {post.author?.profilePicture ? (
-                            <img
-                              src={post.author.profilePicture}
-                              alt={post.author.fullName}
-                              className="dash-post-avatar"
-                            />
-                          ) : (
-                            <div className="dash-post-fallback">
-                              {post.author?.fullName?.charAt(0) || 'S'}
+                    <AnimatedGroup preset="blur-slide">
+                      {recentPosts.map((post) => (
+                        <div key={post._id} className="dash-post-card">
+                          <div className="dash-post-author">
+                            {post.author?.profilePicture ? (
+                              <img
+                                src={post.author.profilePicture}
+                                alt={post.author.fullName}
+                                className="dash-post-avatar"
+                              />
+                            ) : (
+                              <div className="dash-post-fallback">
+                                {post.author?.fullName?.charAt(0) || 'S'}
+                              </div>
+                            )}
+                            <div>
+                              <Link to={`/profile/${post.author?._id}`} className="author-name">
+                                {post.author?.fullName}
+                              </Link>
+                              <span className="author-dept">{post.author?.department}</span>
                             </div>
-                          )}
-                          <div>
-                            <Link to={`/profile/${post.author?._id}`} className="author-name">
-                              {post.author?.fullName}
-                            </Link>
-                            <span className="author-dept">{post.author?.department}</span>
+                            <span className="badge badge-primary post-cat-badge">
+                              {post.category}
+                            </span>
                           </div>
-                          <span className="badge badge-primary post-cat-badge">
-                            {post.category}
-                          </span>
+
+                          <p className="dash-post-content">{post.content}</p>
+
+                          {post.image && (
+                            <img src={post.image} alt="Post attachment" className="dash-post-img" />
+                          )}
+
+                          <div className="dash-post-footer">
+                            <span className="post-stat">
+                              <Heart size={14} /> {post.likesCount || 0} Likes
+                            </span>
+                            <span className="post-stat">
+                              <MessageSquare size={14} /> {post.commentsCount || 0} Comments
+                            </span>
+                            <Link to="/feed" className="read-more-link">
+                              View comments
+                            </Link>
+                          </div>
                         </div>
-
-                        <p className="dash-post-content">{post.content}</p>
-
-                        {post.image && (
-                          <img src={post.image} alt="Post attachment" className="dash-post-img" />
-                        )}
-
-                        <div className="dash-post-footer">
-                          <span className="post-stat">
-                            <Heart size={14} /> {post.likesCount || 0} Likes
-                          </span>
-                          <span className="post-stat">
-                            <MessageSquare size={14} /> {post.commentsCount || 0} Comments
-                          </span>
-                          <Link to="/feed" className="read-more-link">
-                            View comments
-                          </Link>
-                        </div>
-                      </div>
-                    ))
+                      ))}
+                    </AnimatedGroup>
                   )}
                 </div>
               </div>

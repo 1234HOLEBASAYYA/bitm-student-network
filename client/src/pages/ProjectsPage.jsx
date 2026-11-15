@@ -10,6 +10,11 @@ import {
   CheckCircle2, Search, Filter, MessageSquare, Send, Check, X
 } from 'lucide-react';
 import { GithubIcon } from '../components/SocialIcons';
+import { Spotlight } from '@/components/core/spotlight';
+import { Tilt } from '@/components/core/tilt';
+import { Magnetic } from '@/components/core/magnetic';
+import { AnimatedGroup } from '@/components/core/animated-group';
+import { BorderTrail } from '@/components/core/border-trail';
 import '../styles/projects.css';
 
 const ProjectsPage = () => {
@@ -216,12 +221,14 @@ const ProjectsPage = () => {
               Showcase your engineering creations, find teammates for hackathons &amp; final year projects, and contribute to active student repositories.
             </p>
           </div>
-          <button
-            className="btn btn-primary btn-sm"
-            onClick={() => setIsPublishModalOpen(true)}
-          >
-            <PlusCircle size={16} /> Publish Project
-          </button>
+          <Magnetic intensity={0.25} range={55}>
+            <button
+              className="btn btn-primary btn-sm"
+              onClick={() => setIsPublishModalOpen(true)}
+            >
+              <PlusCircle size={16} /> Publish Project
+            </button>
+          </Magnetic>
         </div>
 
         {/* Filter Controls */}
@@ -278,126 +285,152 @@ const ProjectsPage = () => {
             </button>
           </div>
         ) : (
-          <div className="published-projects-grid">
+          <AnimatedGroup className="published-projects-grid" preset="blur-slide">
             {projects.map((proj) => {
               const isOwner = user && user._id === proj.owner?._id;
               const isCollab = user && proj.collaborators?.some((c) => c._id === user._id);
 
               return (
-                <div
+                <Tilt
                   key={proj._id}
-                  id={`project-${proj._id}`}
-                  className={`card published-project-card card-hoverable ${paramProjectId === proj._id ? 'highlighted-post' : ''}`}
+                  rotationFactor={6}
+                  isRevese={false}
+                  style={{ height: '100%' }}
                 >
-                  {proj.image && (
-                    <div className="proj-cover-box">
-                      <img src={proj.image} alt={proj.title} className="proj-cover-img" />
-                    </div>
-                  )}
+                  <div
+                    id={`project-${proj._id}`}
+                    className={`card published-project-card card-hoverable ${paramProjectId === proj._id ? 'highlighted-post' : ''}`}
+                    style={{ position: 'relative', overflow: 'hidden', height: '100%' }}
+                  >
+                    <Spotlight
+                      className="from-blue-500/10 via-indigo-500/5 to-transparent"
+                      size={180}
+                    />
 
-                  <div className="proj-card-content">
-                    <div className="proj-badge-line">
-                      <span className="badge badge-primary">{proj.category}</span>
-                      {proj.isOpenForCollaboration ? (
-                        <span className="badge badge-success">Open for Collab</span>
-                      ) : (
-                        <span className="badge badge-dept">Completed</span>
-                      )}
-                    </div>
+                    {proj.isOpenForCollaboration && (
+                      <BorderTrail
+                        size={80}
+                        style={{
+                          background: 'linear-gradient(90deg, #3b82f6, #10b981)',
+                          opacity: 0.6,
+                        }}
+                      />
+                    )}
 
-                    <h3 className="project-title">{proj.title}</h3>
-                    <p className="project-desc">{proj.description}</p>
-
-                    {/* Tech Badges */}
-                    <div className="project-tech-list">
-                      {proj.technologies?.map((tech, idx) => (
-                        <span key={idx} className="tech-badge">{tech}</span>
-                      ))}
-                    </div>
-
-                    {/* Roles Needed if open for collab */}
-                    {proj.isOpenForCollaboration && proj.rolesNeeded && proj.rolesNeeded.length > 0 && (
-                      <div className="roles-needed-box">
-                        <span className="roles-label">Roles Needed:</span>
-                        <div className="roles-chips">
-                          {proj.rolesNeeded.map((r, idx) => (
-                            <span key={idx} className="role-chip">{r}</span>
-                          ))}
-                        </div>
+                    {proj.image && (
+                      <div className="proj-cover-box">
+                        <img src={proj.image} alt={proj.title} className="proj-cover-img" />
                       </div>
                     )}
 
-                    {/* Owner & Collaborators */}
-                    <div className="proj-team-footer">
-                      <div className="proj-owner-info">
-                        {proj.owner?.profilePicture ? (
-                          <img src={proj.owner.profilePicture} alt={proj.owner.fullName} className="team-avatar" />
+                    <div className="proj-card-content">
+                      <div className="proj-badge-line">
+                        <span className="badge badge-primary">{proj.category}</span>
+                        {proj.isOpenForCollaboration ? (
+                          <span className="badge badge-success">Open for Collab</span>
                         ) : (
-                          <div className="team-avatar-fallback">{proj.owner?.fullName?.charAt(0) || 'U'}</div>
+                          <span className="badge badge-dept">Completed</span>
                         )}
-                        <div>
-                          <Link to={`/profile/${proj.owner?._id}`} className="owner-name">
-                            {proj.owner?.fullName}
-                          </Link>
-                          <span className="owner-dept">{proj.owner?.department?.split(' ')[0]}</span>
+                      </div>
+
+                      <h3 className="project-title">{proj.title}</h3>
+                      <p className="project-desc">{proj.description}</p>
+
+                      {/* Tech Badges */}
+                      <div className="project-tech-list">
+                        {proj.technologies?.map((tech, idx) => (
+                          <span key={idx} className="tech-badge">{tech}</span>
+                        ))}
+                      </div>
+
+                      {/* Roles Needed if open for collab */}
+                      {proj.isOpenForCollaboration && proj.rolesNeeded && proj.rolesNeeded.length > 0 && (
+                        <div className="roles-needed-box">
+                          <span className="roles-label">Roles Needed:</span>
+                          <div className="roles-chips">
+                            {proj.rolesNeeded.map((r, idx) => (
+                              <span key={idx} className="role-chip">{r}</span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Owner & Collaborators */}
+                      <div className="proj-team-footer">
+                        <div className="proj-owner-info">
+                          {proj.owner?.profilePicture ? (
+                            <img src={proj.owner.profilePicture} alt={proj.owner.fullName} className="team-avatar" />
+                          ) : (
+                            <div className="team-avatar-fallback">{proj.owner?.fullName?.charAt(0) || 'U'}</div>
+                          )}
+                          <div>
+                            <Link to={`/profile/${proj.owner?._id}`} className="owner-name">
+                              {proj.owner?.fullName}
+                            </Link>
+                            <span className="owner-dept">{proj.owner?.department?.split(' ')[0]}</span>
+                          </div>
+                        </div>
+
+                        <div className="proj-stars-count">
+                          <button
+                            className={`star-btn ${proj.isStarred ? 'starred' : ''}`}
+                            onClick={() => handleToggleStar(proj._id)}
+                            title="Star project"
+                          >
+                            <Star size={16} fill={proj.isStarred ? '#f59e0b' : 'none'} />
+                            <span>{proj.starsCount || 0}</span>
+                          </button>
                         </div>
                       </div>
 
-                      <div className="proj-stars-count">
-                        <button
-                          className={`star-btn ${proj.isStarred ? 'starred' : ''}`}
-                          onClick={() => handleToggleStar(proj._id)}
-                          title="Star project"
-                        >
-                          <Star size={16} fill={proj.isStarred ? '#f59e0b' : 'none'} />
-                          <span>{proj.starsCount || 0}</span>
-                        </button>
-                      </div>
-                    </div>
+                      {/* Card Action Buttons */}
+                      <div className="proj-card-actions">
+                        <div className="ext-links">
+                          {proj.githubUrl && (
+                            <a href={proj.githubUrl} target="_blank" rel="noreferrer" className="btn btn-outline btn-sm">
+                              <GithubIcon size={14} /> Code
+                            </a>
+                          )}
+                          {proj.liveDemoUrl && (
+                            <a href={proj.liveDemoUrl} target="_blank" rel="noreferrer" className="btn btn-outline btn-sm">
+                              <ExternalLink size={14} /> Demo
+                            </a>
+                          )}
+                        </div>
 
-                    {/* Card Action Buttons */}
-                    <div className="proj-card-actions">
-                      <div className="ext-links">
-                        {proj.githubUrl && (
-                          <a href={proj.githubUrl} target="_blank" rel="noreferrer" className="btn btn-outline btn-sm">
-                            <GithubIcon size={14} /> Code
-                          </a>
-                        )}
-                        {proj.liveDemoUrl && (
-                          <a href={proj.liveDemoUrl} target="_blank" rel="noreferrer" className="btn btn-outline btn-sm">
-                            <ExternalLink size={14} /> Demo
-                          </a>
-                        )}
+                        {isOwner ? (
+                          <Magnetic intensity={0.2} range={45}>
+                            <button
+                              className="btn btn-outline-primary btn-sm"
+                              onClick={() => handleOpenManageRequests(proj)}
+                            >
+                              Manage Collab Requests
+                            </button>
+                          </Magnetic>
+                        ) : isCollab ? (
+                          <span className="collab-badge-label">
+                            <CheckCircle2 size={14} /> Collaborator
+                          </span>
+                        ) : proj.isOpenForCollaboration ? (
+                          <Magnetic intensity={0.2} range={45}>
+                            <button
+                              className="btn btn-primary btn-sm"
+                              onClick={() => {
+                                setSelectedProjectForCollab(proj);
+                                setCollabMessage(`Hi ${proj.owner?.fullName}, I'm interested in collaborating on ${proj.title}!`);
+                              }}
+                            >
+                              Request to Join
+                            </button>
+                          </Magnetic>
+                        ) : null}
                       </div>
-
-                      {isOwner ? (
-                        <button
-                          className="btn btn-outline-primary btn-sm"
-                          onClick={() => handleOpenManageRequests(proj)}
-                        >
-                          Manage Collab Requests
-                        </button>
-                      ) : isCollab ? (
-                        <span className="collab-badge-label">
-                          <CheckCircle2 size={14} /> Collaborator
-                        </span>
-                      ) : proj.isOpenForCollaboration ? (
-                        <button
-                          className="btn btn-primary btn-sm"
-                          onClick={() => {
-                            setSelectedProjectForCollab(proj);
-                            setCollabMessage(`Hi ${proj.owner?.fullName}, I'm interested in collaborating on ${proj.title}!`);
-                          }}
-                        >
-                          Request to Join
-                        </button>
-                      ) : null}
                     </div>
                   </div>
-                </div>
+                </Tilt>
               );
             })}
-          </div>
+          </AnimatedGroup>
         )}
 
         {/* PUBLISH PROJECT MODAL */}

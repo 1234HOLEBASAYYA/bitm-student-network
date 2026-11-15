@@ -26,12 +26,15 @@ export const ConnectedCommunityCanvas = ({ className = '' }) => {
     let mouseX = 0, mouseY = 0;
     let targetX = 0, targetY = 0;
 
+    // Check reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     // Check WebGL availability
     try {
       const canvas = document.createElement('canvas');
       const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-      if (!gl) {
-        setHasWebGL(false);
+      if (!gl || prefersReducedMotion) {
+        setHasWebGL(!prefersReducedMotion && !!gl);
         return;
       }
     } catch (e) {
@@ -39,22 +42,23 @@ export const ConnectedCommunityCanvas = ({ className = '' }) => {
       return;
     }
 
+    const isMobile = window.innerWidth < 768;
     const width = container.clientWidth || window.innerWidth;
     const height = container.clientHeight || 520;
 
     // 1. Scene & Camera
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
-    camera.position.z = 28;
+    camera.position.z = isMobile ? 34 : 28;
 
     // 2. Renderer
     try {
       renderer = new THREE.WebGLRenderer({
         alpha: true,
-        antialias: true,
+        antialias: !isMobile,
         powerPreference: 'high-performance'
       });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 2));
       renderer.setSize(width, height);
       renderer.setClearColor(0x000000, 0);
       container.appendChild(renderer.domElement);
@@ -112,7 +116,7 @@ export const ConnectedCommunityCanvas = ({ className = '' }) => {
     });
 
     // Secondary Student Nodes (smaller connected particles)
-    const extraNodeCount = 28;
+    const extraNodeCount = isMobile ? 12 : 28;
     for (let j = 0; j < extraNodeCount; j++) {
       const radius = 7 + Math.random() * 8;
       const theta = Math.random() * Math.PI * 2;
@@ -165,7 +169,7 @@ export const ConnectedCommunityCanvas = ({ className = '' }) => {
     nodesGroup.add(linesMesh);
 
     // Ambient floating star/particle field
-    const particleCount = 140;
+    const particleCount = isMobile ? 50 : 140;
     const particleGeometry = new THREE.BufferGeometry();
     const particleCoords = [];
     for (let p = 0; p < particleCount * 3; p += 3) {

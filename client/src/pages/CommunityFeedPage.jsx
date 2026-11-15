@@ -10,6 +10,10 @@ import {
   Flame, Heart, MessageSquare, Share2, Image, Send, MoreVertical,
   Trash2, Edit3, Check, Filter, Sparkles, User, Tag
 } from 'lucide-react';
+import { ScrollProgress } from '@/components/core/scroll-progress';
+import { Spotlight } from '@/components/core/spotlight';
+import { Magnetic } from '@/components/core/magnetic';
+import { AnimatedGroup } from '@/components/core/animated-group';
 import '../styles/feed.css';
 
 const CommunityFeedPage = () => {
@@ -254,7 +258,9 @@ const CommunityFeedPage = () => {
     <div className="dashboard-layout">
       <Sidebar />
 
-      <main className="dashboard-main feed-page">
+      <main className="dashboard-main feed-page relative">
+        <ScrollProgress className="feed-scroll-progress-line" />
+
         {/* Create Post Card */}
         <div className="card create-post-card">
           <div className="create-post-header">
@@ -309,13 +315,15 @@ const CommunityFeedPage = () => {
                 <Image size={18} /> Add Image
               </button>
 
-              <button
-                type="submit"
-                className="btn btn-primary btn-sm"
-                disabled={submittingPost || !postContent.trim()}
-              >
-                <Send size={15} /> {submittingPost ? 'Posting...' : 'Publish Post'}
-              </button>
+              <Magnetic intensity={0.3} range={60}>
+                <button
+                  type="submit"
+                  className="btn btn-primary btn-sm magnetic-cta"
+                  disabled={submittingPost || !postContent.trim()}
+                >
+                  <Send size={15} /> {submittingPost ? 'Posting...' : 'Publish Post'}
+                </button>
+              </Magnetic>
             </div>
           </form>
         </div>
@@ -364,7 +372,7 @@ const CommunityFeedPage = () => {
             </p>
           </div>
         ) : (
-          <div className="feed-posts-stream">
+          <AnimatedGroup preset="blur-slide" className="feed-posts-stream">
             {posts.map((post) => {
               const isAuthor = user && (user._id === post.author?._id || user.role === 'admin');
               const comments = commentsMap[post._id] || [];
@@ -374,11 +382,13 @@ const CommunityFeedPage = () => {
                 <motion.div
                   key={post._id}
                   id={`post-${post._id}`}
-                  className={`card feed-post-card ${targetPostId === post._id ? 'highlighted-post' : ''}`}
+                  className={`card feed-post-card relative overflow-hidden ${targetPostId === post._id ? 'highlighted-post' : ''}`}
+                  style={{ position: 'relative', overflow: 'hidden' }}
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3 }}
                 >
+                  <Spotlight size={180} />
                   {/* Post Header */}
                   <div className="feed-post-header">
                     <div className="post-author-box">
@@ -554,7 +564,7 @@ const CommunityFeedPage = () => {
                 </motion.div>
               );
             })}
-          </div>
+          </AnimatedGroup>
         )}
 
         {/* Edit Post Modal */}
