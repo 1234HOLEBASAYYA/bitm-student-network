@@ -1,0 +1,339 @@
+.messages-page-main {
+  height: calc(100vh - 120px);
+}
+
+.messenger-container {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+
+/* Sidebar Conversations */
+.messenger-sidebar {
+  border-right: 1px solid var(--border-color);
+  background: var(--bg-card);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.messenger-sidebar-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.messenger-sidebar-header h3 {
+  font-size: 1.1rem;
+  color: var(--primary-navy);
+}
+
+.convo-search-box {
+  padding: 12px 16px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.convo-search-icon {
+  position: absolute;
+  left: 28px;
+  color: #94a3b8;
+}
+
+.convo-search-input {
+  width: 100%;
+  padding: 8px 12px 8px 36px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.conversations-scroll-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.conversation-tab-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-light);
+  transition: background var(--transition-fast);
+}
+
+.conversation-tab-item:hover {
+  background: var(--bg-subtle);
+}
+
+.conversation-tab-item.active {
+  background: var(--bg-highlight);
+  border-left: 3px solid var(--accent-blue);
+}
+
+.convo-avatar-wrapper {
+  position: relative;
+}
+
+.convo-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.convo-avatar-fallback {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--primary-navy);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.unread-dot {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: var(--danger);
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 10px;
+  border: 2px solid #ffffff;
+}
+
+.convo-details {
+  flex: 1;
+  overflow: hidden;
+}
+
+.convo-details-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.convo-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.convo-time {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.convo-dept {
+  font-size: 0.72rem;
+  color: var(--accent-blue);
+  font-weight: 600;
+  display: block;
+}
+
+.convo-preview {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px;
+}
+
+.no-convos-state {
+  padding: 32px 16px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.no-convos-sub {
+  font-size: 0.78rem;
+  color: var(--text-light);
+  margin-top: 6px;
+}
+
+/* Right Chat Panel */
+.messenger-thread-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #ffffff;
+}
+
+.thread-top-bar {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-subtle);
+}
+
+.thread-user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.thread-user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.thread-user-fallback {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--accent-blue);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.thread-user-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary-navy);
+}
+
+.thread-user-dept {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.messages-stream-box {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #f8fafc;
+}
+
+.empty-thread-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.message-bubble-row {
+  display: flex;
+  width: 100%;
+}
+
+.message-bubble-row.outgoing {
+  justify-content: flex-end;
+}
+
+.message-bubble-row.incoming {
+  justify-content: flex-start;
+}
+
+.message-bubble {
+  max-width: 65%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  position: relative;
+  word-break: break-word;
+}
+
+.message-bubble.mine {
+  background: var(--primary-navy);
+  color: #ffffff;
+  border-bottom-right-radius: 2px;
+}
+
+.message-bubble.theirs {
+  background: #ffffff;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-bottom-left-radius: 2px;
+}
+
+.msg-text {
+  margin-bottom: 4px;
+}
+
+.msg-timestamp {
+  font-size: 0.68rem;
+  opacity: 0.75;
+  display: block;
+  text-align: right;
+}
+
+.message-composer-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  border-top: 1px solid var(--border-color);
+  background: #ffffff;
+}
+
+.composer-input {
+  flex: 1;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  padding: 10px 18px;
+  outline: none;
+  font-size: 0.92rem;
+}
+
+.composer-input:focus {
+  border-color: var(--accent-blue);
+}
+
+.composer-send-btn {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-chat-selected {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  .messenger-container {
+    grid-template-columns: 1fr;
+  }
+  .messenger-sidebar {
+    display: none; /* Can toggle in responsive mode */
+  }
+}

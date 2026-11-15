@@ -1,0 +1,23 @@
+{
+  "name": "bitm-student-network",
+  "version": "1.0.0",
+  "description": "BITM Student Network - College Networking & Knowledge Sharing Portal for Ballari Institute of Technology and Management",
+  "scripts": {
+    "server": "npm --prefix server start",
+    "client": "npm --prefix client run dev",
+    "seed": "npm --prefix server run seed",
+    "build:client": "npm --prefix client run build",
+    "install:all": "npm --prefix server install && npm --prefix client install"
+  },
+  "keywords": [
+    "BITM",
+    "Ballari Institute of Technology and Management",
+    "MERN",
+    "React",
+    "Node",
+    "MongoDB",
+    "Student Network"
+  ],
+  "author": "BITM Student Network Team",
+  "license": "ISC"
+}

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 60" width="240" height="60">
+  <defs>
+    <linearGradient id="gradLogo" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#003366" />
+      <stop offset="100%" stop-color="#0066cc" />
+    </linearGradient>
+  </defs>
+  <!-- College Emblem Shield -->
+  <path d="M12 8 L38 8 L42 28 C42 42 26 50 25 51 C24 50 8 42 8 28 Z" fill="url(#gradLogo)" />
+  <path d="M16 12 L34 12 L37 27 C37 38 26 44 25 45 C24 44 13 38 13 27 Z" fill="#ffffff" />
+  <!-- Academic Torch / Book inside shield -->
+  <path d="M21 24 L25 18 L29 24 L27 34 L23 34 Z" fill="#003366" />
+  <circle cx="25" cy="17" r="3" fill="#eab308" />
+
+  <!-- Text -->
+  <text x="54" y="24" font-family="'Segoe UI', Roboto, sans-serif" font-size="19" font-weight="800" fill="#003366" letter-spacing="0.5">BITM</text>
+  <text x="54" y="38" font-family="'Segoe UI', Roboto, sans-serif" font-size="10.5" font-weight="600" fill="#0066cc" letter-spacing="0.8">STUDENT NETWORK</text>
+  <text x="54" y="49" font-family="'Segoe UI', Roboto, sans-serif" font-size="7.5" font-weight="500" fill="#64748b">BALLARI INSTITUTE OF TECH &amp; MGMT</text>
+</svg>

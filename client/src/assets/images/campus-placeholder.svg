@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="1000" height="600">
+  <defs>
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#bae6fd" />
+      <stop offset="100%" stop-color="#f0f9ff" />
+    </linearGradient>
+    <linearGradient id="bldgGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="100%" stop-color="#e2e8f0" />
+    </linearGradient>
+    <linearGradient id="glassGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+  </defs>
+
+  <!-- Sky -->
+  <rect width="1000" height="600" fill="url(#skyGrad)" />
+  <circle cx="850" cy="110" r="45" fill="#fef08a" opacity="0.8" />
+
+  <!-- Lawn -->
+  <path d="M0 440 Q500 420 1000 440 L1000 600 L0 600 Z" fill="#22c55e" opacity="0.85" />
+  <path d="M0 480 Q500 460 1000 480 L1000 600 L0 600 Z" fill="#16a34a" />
+
+  <!-- College Building Central Block -->
+  <rect x="220" y="160" width="560" height="310" rx="6" fill="url(#bldgGrad)" stroke="#cbd5e1" stroke-width="2" />
+
+  <!-- Main Pillar / Facade -->
+  <rect x="360" y="130" width="280" height="340" rx="4" fill="#ffffff" stroke="#94a3b8" stroke-width="2" />
+
+  <!-- Roof Arch & Header -->
+  <polygon points="340,130 500,75 660,130" fill="#003366" />
+  <rect x="350" y="125" width="300" height="20" fill="#eab308" />
+
+  <!-- BITM Signboard on College Facade -->
+  <rect x="380" y="155" width="240" height="42" rx="4" fill="#003366" />
+  <text x="500" y="182" font-family="'Segoe UI', Roboto, sans-serif" font-size="16" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="1">BITM BALLARI</text>
+
+  <!-- Pillars -->
+  <rect x="380" y="210" width="22" height="260" fill="#e2e8f0" stroke="#cbd5e1" />
+  <rect x="430" y="210" width="22" height="260" fill="#e2e8f0" stroke="#cbd5e1" />
+  <rect x="550" y="210" width="22" height="260" fill="#e2e8f0" stroke="#cbd5e1" />
+  <rect x="600" y="210" width="22" height="260" fill="#e2e8f0" stroke="#cbd5e1" />
+
+  <!-- Glass Entrance Door -->
+  <rect x="470" y="320" width="60" height="150" fill="url(#glassGrad)" rx="2" />
+  <line x1="500" y1="320" x2="500" y2="470" stroke="#ffffff" stroke-width="2" />
+
+  <!-- Left Wing Windows -->
+  <g fill="url(#glassGrad)" opacity="0.9">
+    <rect x="245" y="190" width="45" height="40" rx="3" />
+    <rect x="300" y="190" width="45" height="40" rx="3" />
+    <rect x="245" y="250" width="45" height="40" rx="3" />
+    <rect x="300" y="250" width="45" height="40" rx="3" />
+    <rect x="245" y="310" width="45" height="40" rx="3" />
+    <rect x="300" y="310" width="45" height="40" rx="3" />
+    <rect x="245" y="370" width="45" height="40" rx="3" />
+    <rect x="300" y="370" width="45" height="40" rx="3" />
+  </g>
+
+  <!-- Right Wing Windows -->
+  <g fill="url(#glassGrad)" opacity="0.9">
+    <rect x="655" y="190" width="45" height="40" rx="3" />
+    <rect x="710" y="190" width="45" height="40" rx="3" />
+    <rect x="655" y="250" width="45" height="40" rx="3" />
+    <rect x="710" y="250" width="45" height="40" rx="3" />
+    <rect x="655" y="310" width="45" height="40" rx="3" />
+    <rect x="710" y="310" width="45" height="40" rx="3" />
+    <rect x="655" y="370" width="45" height="40" rx="3" />
+    <rect x="710" y="370" width="45" height="40" rx="3" />
+  </g>
+
+  <!-- Entrance Steps -->
+  <polygon points="340,470 660,470 690,520 310,520" fill="#cbd5e1" />
+  <line x1="330" y1="485" x2="670" y2="485" stroke="#94a3b8" stroke-width="2" />
+  <line x1="320" y1="502" x2="680" y2="502" stroke="#94a3b8" stroke-width="2" />
+
+  <!-- Trees & Greenery -->
+  <circle cx="140" cy="400" r="55" fill="#15803d" />
+  <circle cx="180" cy="420" r="45" fill="#16a34a" />
+  <rect x="135" y="440" width="16" height="70" fill="#78350f" />
+
+  <circle cx="850" cy="400" r="60" fill="#15803d" />
+  <circle cx="810" cy="425" r="45" fill="#16a34a" />
+  <rect x="842" y="440" width="16" height="70" fill="#78350f" />
+
+  <!-- Pathway -->
+  <polygon points="460,520 540,520 580,600 420,600" fill="#e2e8f0" />
+</svg>
