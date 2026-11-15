@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Sidebar from '../components/Sidebar';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -13,6 +13,7 @@ import '../styles/feed.css';
 
 const CommunityFeedPage = () => {
   const { user } = useAuth();
+  const { id: targetPostId } = useParams();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filterMode, setFilterMode] = useState('all'); // 'all' or 'connected'
@@ -55,7 +56,19 @@ const CommunityFeedPage = () => {
 
       const res = await api.get(`/posts?${params.toString()}`);
       if (res.data.success) {
-        setPosts(res.data.posts);
+        let loadedPosts = res.data.posts;
+        // If route specifies a target post ID and it's not present in the current filter list, fetch it directly
+        if (targetPostId && !loadedPosts.some((p) => p._id === targetPostId)) {
+          try {
+            const singleRes = await api.get(`/posts/${targetPostId}`);
+            if (singleRes.data.success && singleRes.data.post) {
+              loadedPosts = [singleRes.data.post, ...loadedPosts];
+            }
+          } catch (err) {
+            console.error('Target post not found:', err);
+          }
+        }
+        setPosts(loadedPosts);
       }
     } catch (err) {
       console.error('Error fetching feed:', err);
@@ -66,7 +79,20 @@ const CommunityFeedPage = () => {
 
   useEffect(() => {
     fetchPosts();
-  }, [filterMode, categoryFilter]);
+  }, [filterMode, categoryFilter, targetPostId]);
+
+  // Auto-scroll to target post when loaded
+  useEffect(() => {
+    if (targetPostId && posts.length > 0) {
+      const timer = setTimeout(() => {
+        const el = document.getElementById(`post-${targetPostId}`);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [targetPostId, posts]);
 
   // Create New Post
   const handleCreatePost = async (e) => {
@@ -344,7 +370,11 @@ const CommunityFeedPage = () => {
               const isCommentsOpen = activeCommentPostId === post._id;
 
               return (
-                <div key={post._id} className="card feed-post-card">
+                <div
+                  key={post._id}
+                  id={`post-${post._id}`}
+                  className={`card feed-post-card ${targetPostId === post._id ? 'highlighted-post' : ''}`}
+                >
                   {/* Post Header */}
                   <div className="feed-post-header">
                     <div className="post-author-box">

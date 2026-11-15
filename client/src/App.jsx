@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import { NotificationProvider } from './context/NotificationContext';
 
 // Layout Components
@@ -35,6 +35,11 @@ import AdminDashboardPage from './pages/AdminDashboardPage';
 // Styles
 import './styles/global.css';
 import './styles/navbar.css';
+
+const FallbackRedirect = () => {
+  const { isAuthenticated } = useAuth();
+  return <Navigate to={isAuthenticated ? '/dashboard' : '/'} replace />;
+};
 
 function App() {
   return (
@@ -101,6 +106,14 @@ function App() {
                   }
                 />
                 <Route
+                  path="/posts/:id"
+                  element={
+                    <ProtectedRoute>
+                      <CommunityFeedPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
                   path="/discussions"
                   element={
                     <ProtectedRoute>
@@ -109,7 +122,23 @@ function App() {
                   }
                 />
                 <Route
+                  path="/discussions/:id"
+                  element={
+                    <ProtectedRoute>
+                      <DiscussionsPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
                   path="/projects"
+                  element={
+                    <ProtectedRoute>
+                      <ProjectsPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/projects/:id"
                   element={
                     <ProtectedRoute>
                       <ProjectsPage />
@@ -134,6 +163,14 @@ function App() {
                 />
                 <Route
                   path="/messages"
+                  element={
+                    <ProtectedRoute>
+                      <MessagesPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/messages/:userId"
                   element={
                     <ProtectedRoute>
                       <MessagesPage />
@@ -176,7 +213,7 @@ function App() {
                 />
 
                 {/* Catch-all redirect */}
-                <Route path="*" element={<Navigate to="/" replace />} />
+                <Route path="*" element={<FallbackRedirect />} />
               </Routes>
             </div>
             <Footer />

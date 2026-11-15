@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Sidebar from '../components/Sidebar';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -13,6 +13,7 @@ import '../styles/discussions.css';
 
 const DiscussionsPage = () => {
   const { user } = useAuth();
+  const { id: paramDiscussionId } = useParams();
   const [discussions, setDiscussions] = useState([]);
   const [selectedDiscussion, setSelectedDiscussion] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -80,6 +81,13 @@ const DiscussionsPage = () => {
       alert('Error fetching discussion details');
     }
   };
+
+  // Auto-open discussion from route parameter
+  useEffect(() => {
+    if (paramDiscussionId) {
+      handleOpenDiscussion(paramDiscussionId);
+    }
+  }, [paramDiscussionId]);
 
   // Submit Question
   const handleAskQuestion = async (e) => {

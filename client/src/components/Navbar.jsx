@@ -7,6 +7,7 @@ import {
   LogOut, Shield, ChevronDown, Check, ExternalLink
 } from 'lucide-react';
 import bitmLogo from '../assets/images/bitm-logo.png';
+import { resolveNotificationLink } from '../utils/notificationHelper';
 
 const Navbar = () => {
   const { user, isAuthenticated, isAdmin, logout } = useAuth();
@@ -126,7 +127,8 @@ const Navbar = () => {
                             className={`notif-item ${!n.read ? 'unread' : ''}`}
                             onClick={() => {
                               markAsRead(n._id);
-                              if (n.link) navigate(n.link);
+                              const target = resolveNotificationLink(n);
+                              navigate(target);
                               setNotifDropdownOpen(false);
                             }}
                           >

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Sidebar from '../components/Sidebar';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -14,6 +14,7 @@ import '../styles/projects.css';
 
 const ProjectsPage = () => {
   const { user } = useAuth();
+  const { id: paramProjectId } = useParams();
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [categoryFilter, setCategoryFilter] = useState('All');
@@ -67,7 +68,18 @@ const ProjectsPage = () => {
 
       const res = await api.get(`/projects?${params.toString()}`);
       if (res.data.success) {
-        setProjects(res.data.projects);
+        let loaded = res.data.projects;
+        if (paramProjectId && !loaded.some((p) => p._id === paramProjectId)) {
+          try {
+            const single = await api.get(`/projects/${paramProjectId}`);
+            if (single.data.success && single.data.project) {
+              loaded = [single.data.project, ...loaded];
+            }
+          } catch (err) {
+            console.error('Target project fetch error:', err);
+          }
+        }
+        setProjects(loaded);
       }
     } catch (err) {
       console.error('Error fetching projects:', err);
@@ -78,7 +90,19 @@ const ProjectsPage = () => {
 
   useEffect(() => {
     fetchProjects();
-  }, [categoryFilter, collabOnly, search]);
+  }, [categoryFilter, collabOnly, search, paramProjectId]);
+
+  useEffect(() => {
+    if (paramProjectId && projects.length > 0) {
+      const timer = setTimeout(() => {
+        const el = document.getElementById(`project-${paramProjectId}`);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [paramProjectId, projects]);
 
   // Handle Publish Project
   const handlePublishProject = async (e) => {
@@ -260,7 +284,11 @@ const ProjectsPage = () => {
               const isCollab = user && proj.collaborators?.some((c) => c._id === user._id);
 
               return (
-                <div key={proj._id} className="card published-project-card card-hoverable">
+                <div
+                  key={proj._id}
+                  id={`project-${proj._id}`}
+                  className={`card published-project-card card-hoverable ${paramProjectId === proj._id ? 'highlighted-post' : ''}`}
+                >
                   {proj.image && (
                     <div className="proj-cover-box">
                       <img src={proj.image} alt={proj.title} className="proj-cover-img" />

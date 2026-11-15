@@ -7,6 +7,7 @@ import {
   Award, Calendar, ShieldCheck, ArrowRight
 } from 'lucide-react';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { resolveNotificationLink } from '../utils/notificationHelper';
 
 const NotificationsPage = () => {
   const { notifications, unreadCount, loading, markAllAsRead, markAsRead } = useNotifications();
@@ -75,7 +76,8 @@ const NotificationsPage = () => {
                 }}
                 onClick={() => {
                   markAsRead(n._id);
-                  if (n.link) navigate(n.link);
+                  const target = resolveNotificationLink(n);
+                  navigate(target);
                 }}
               >
                 <div

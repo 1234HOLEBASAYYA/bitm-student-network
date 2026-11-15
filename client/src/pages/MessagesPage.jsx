@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Sidebar from '../components/Sidebar';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -10,6 +11,7 @@ import '../styles/messages.css';
 
 const MessagesPage = () => {
   const { user } = useAuth();
+  const { userId: paramUserId } = useParams();
   const [conversations, setConversations] = useState([]);
   const [activeConversationUser, setActiveConversationUser] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -32,8 +34,21 @@ const MessagesPage = () => {
       const res = await api.get('/messages/conversations');
       if (res.data.success) {
         setConversations(res.data.conversations);
-        // Default select first conversation if none selected
-        if (!activeConversationUser && res.data.conversations.length > 0) {
+        if (paramUserId) {
+          const match = res.data.conversations.find((c) => c.user._id === paramUserId);
+          if (match) {
+            setActiveConversationUser(match.user);
+          } else {
+            try {
+              const uRes = await api.get(`/users/${paramUserId}`);
+              if (uRes.data.success && uRes.data.user) {
+                setActiveConversationUser(uRes.data.user);
+              }
+            } catch (err) {
+              console.error('Target user fetch error:', err);
+            }
+          }
+        } else if (!activeConversationUser && res.data.conversations.length > 0) {
           setActiveConversationUser(res.data.conversations[0].user);
         }
       }
@@ -46,7 +61,7 @@ const MessagesPage = () => {
 
   useEffect(() => {
     fetchConversations();
-  }, []);
+  }, [paramUserId]);
 
   // Fetch messages when active user changes
   useEffect(() => {

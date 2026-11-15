@@ -1,6 +1,7 @@
 const Message = require('../models/Message');
 const Connection = require('../models/Connection');
 const User = require('../models/User');
+const Notification = require('../models/Notification');
 
 // @desc    Get conversation list
 // @route   GET /api/messages/conversations
@@ -155,6 +156,19 @@ exports.sendMessage = async (req, res) => {
     const populated = await Message.findById(message._id)
       .populate('sender', 'fullName profilePicture')
       .populate('receiver', 'fullName profilePicture');
+
+    // Notify receiver about the new message
+    try {
+      await Notification.create({
+        recipient: targetUserId,
+        sender: currentUserId,
+        type: 'new_message',
+        message: `${req.user.fullName} sent you a new message.`,
+        link: `/messages/${currentUserId}`
+      });
+    } catch (notifErr) {
+      console.error('Error creating message notification:', notifErr);
+    }
 
     res.status(201).json({
       success: true,
